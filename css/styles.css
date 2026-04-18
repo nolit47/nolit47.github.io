@@ -601,3 +601,10 @@ body.inner-page::after { opacity: 1; }
   display: block;
   animation: eiseSpin 3s linear infinite;
 }
+
+.friend-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 40px;
+}
