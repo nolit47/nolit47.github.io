@@ -99,11 +99,10 @@ function transitionTo(callback) {
 
   snd_playtileFaster();
 
-  order1.forEach((idx, i) => {  // staggered af
+  order1.forEach((idx, i) => {
     setTimeout(() => {
       tiles[idx].classList.add('on');
 
-      
       if (i === TILE_COUNT - 1) {
         setTimeout(() => {
           callback();
@@ -121,7 +120,7 @@ function transitionTo(callback) {
             setTimeout(() => {
               tile.style.setProperty('--lifetime',   lifetime + 's');
               tile.style.setProperty('--fade-delay', '0s');
-      
+
               tile.classList.remove('on');
               tile.classList.add('fade');
 
@@ -174,15 +173,13 @@ if (HasDeepLinker) {
 
     gate.addEventListener('animationend', () => {
       gate.style.display = 'none';
-      
+
       site.classList.add('visible');
     }, { once: true });
   });
 }
 
 
-
-                                                                                                                                                                                                   
 
 // navigation
 const pages = ['home', 'projects', 'contributions', 'music', 'about'];
@@ -205,7 +202,7 @@ function navigate(name) {
   });
 }
 
-window.addEventListener('popstate', (e) => {  // handle buttons
+window.addEventListener('popstate', (e) => {
   const page = e.state?.page || 'home';
 
   transitionTo(() => {
@@ -220,12 +217,14 @@ if (HasDeepLinker) {
   document.body.classList.toggle('inner-page', INITHASH !== 'home');
 }
 
+
+
 /* unlocker */
 
-let unlocked       = false;
+let unlocked         = false;
 let fx_pulsetimehold = null;
-let fx_fadeint   = null;
-let snd_ishoverplaying   = false;
+let fx_fadeint       = null;
+let snd_ishoverplaying = false;
 
 async function unlock() {
   if (unlocked) return;
@@ -246,8 +245,8 @@ document.addEventListener('click',     unlock);
 document.addEventListener('keydown',   unlock);
 document.addEventListener('mousemove', unlock);
 
-let main_shakebtn  = null;
-let fx_shakeloop = null;
+let main_shakebtn = null;
+let fx_shakeloop  = null;
 
 function scrfx_StartShake(btn) {
   main_shakebtn = btn;
@@ -262,7 +261,6 @@ function scrfx_StartShake(btn) {
   fx_shakeloop = setTimeout(() => {
     if (main_shakebtn === btn) scrfx_StartShake(btn);
   }, 2600);
-
 }
 
 function scrfx_stopShake() {
@@ -281,7 +279,6 @@ function scrfx_startpulse(btn) {
 
   scrfx_StartShake(btn);
 }
-
 
 function scrfx_stoppulse() {
   clearInterval(fx_fadeint);
@@ -309,7 +306,7 @@ hoverSound.addEventListener('ended', () => { snd_ishoverplaying = false; });
 
 
 
-document.querySelectorAll('.nav-btn').forEach(btn => {  // nav button fx
+document.querySelectorAll('.nav-btn').forEach(btn => {
   btn.addEventListener('mouseenter', () => {
     if (!unlocked) return;
 
@@ -340,9 +337,7 @@ document.querySelectorAll('.prj-btn').forEach(btn => {
     projectHoverSound.play().catch(() => {});
   });
 
-
-
-  btn.addEventListener('click', (e) => {  // prj click anim
+  btn.addEventListener('click', (e) => {
     e.preventDefault();
     if (btn.dataset.animating) return;
 
@@ -353,16 +348,14 @@ document.querySelectorAll('.prj-btn').forEach(btn => {
 
     const label = btn.closest('.prj-item')?.querySelector('.prj-label')?.textContent || 'PROJECT';
 
-    const rect  = btn.getBoundingClientRect();
+    const rect    = btn.getBoundingClientRect();
     const centerX = window.innerWidth  / 2;
     const centerY = window.innerHeight / 2;
     const dx = centerX - (rect.left + rect.width  / 2);
     const dy = centerY - (rect.top  + rect.height / 2);
 
     const backdrop = document.createElement('div');
-
     backdrop.id = 'prj-backdrop';
-
     document.body.appendChild(backdrop);
 
     requestAnimationFrame(() => backdrop.classList.add('visible'));
@@ -420,6 +413,13 @@ const PROJECT_DATA = {
   'NYCTO': {
     folder: 'nycto',
     screenshots: 6,
+    meta: {
+      status:    'In Development',
+      duration:  'July 2024 - Present',
+      type:      'GMOD Addon',
+      programs:  'Hammer++, VTFEdit, Notepad++, Visual Studio Code, FL Studio 21, PaintDOTNet, Audacity, Ocenaudio, Crowbar, Blender',
+      languages: 'GLua',
+    },
     links: [
       { icon: 'stuff/icons/steam.png',   url: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3301968802' },
       { icon: 'stuff/icons/yt.png',      url: 'https://www.youtube.com/@nolit47' },
@@ -442,21 +442,161 @@ const PROJECT_DATA = {
       <li>Interesting Soundtrack that reflects the state of the protagonist</li>
       <li>Unique artstyle that constantly changes throughout the entire adventure</li>
     </ul>
-
+    <br>
+    <p>I constantly post devlogs about Nycto on my Twitter and Youtube, so be sure to check them out.</p>
     `
   },
-  // more to come
+
+  'Afraid of Monsters: Source': {
+    folder: 'aomdc',
+    screenshots: 6,
+    meta: {
+      status:    'Complete',
+      duration:  '3 months',
+      type:      'GMOD Addon / Port',
+      programs:  'Hammer++, Hammer World Editor 4.0, J.A.C.K, VTFEdit, Notepad++, WadMaker, VMT Editor, xwad, Half-life Unified SDK Map Decompiler, GLD2SOURCE Map Fixer, Visual Studio Code, FL Studio 21, PaintDOTNet, Audacity, Crowbar, Blender',
+      languages: 'GLua',
+    },
+    links: [
+      { icon: 'stuff/icons/steam.png',   url: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3692187352' },
+      { icon: 'stuff/icons/yt.png',      url: 'https://www.youtube.com/@nolit47' },
+      { icon: 'stuff/icons/twitter.png', url: 'https://x.com/nolit47' },
+    ],
+    description: `
+    <p>A collaboration between me and vityhysa.</p>
+    <br>
+    <p>Afraid of Monsters: Source is a full port / remaster of the classic 2007 Half-Life mod Afraid of Monsters: Director's Cut, created by Team Psykskallar, now brought into Garry's Mod.</p>
+    <p>This remaster introduces improvements to existing mechanics and adds a small amount of new content.</p>
+    <br>
+    <p>This project was a struggle to develop as we had to come across SO MUCH issues that I genuinely wanted to give up and kill myself.</p>
+    <p>But after almost 3 months of development, we finally managed to release it... Was it worth it? Probably...</p>
+    <p>The mod received over 50k visits in 2 weeks, which makes it my most popular on my workshop page.</p>
+    <br>
+    <p>I can go over every single issue i've encountered during development, but it would take way too long and it would be painful to read about.</p>
+    <p>But remember... Porting Goldsrc mods to Gmod is not worth it. At all.</p>
+    `
+  },
+
+  'TRAUMATIC DESCENT': {
+    folder: 'td',
+    screenshots: 6,
+    meta: {
+      status:    'Released in Early Access, Discontinued until further notice',
+      duration:  '1 Year',
+      type:      'Roblox Game',
+      programs:  'Blender, FL Studio 21, Audacity, Roblox Studio, PaintDOTNet',
+      languages: 'None',
+    },
+    links: [
+      { icon: 'stuff/icons/roblox.png',   url: 'https://www.roblox.com/games/77632962923565/TRAUMATIC-DESCENT' },
+      { icon: 'stuff/icons/bandcamp_small.png',   url: 'https://nolit47.bandcamp.com/album/traumatic-descent-ost' },
+      { icon: 'stuff/icons/yt.png',      url: 'https://www.youtube.com/@nolit47' },
+      { icon: 'stuff/icons/twitter.png', url: 'https://x.com/nolit47' },
+    ],
+    description: 
+    `
+    <p>TRAUMATIC DESCENT is a Roblox game made by me and vityhysa, inspired by Cruelty Squad and Psycho Patrol R made by Ville Kallio.</p>
+    <p>It's been in development since October 2024 and eventually released into EARLY ACCESS in October 2025. </p>
+    <br>
+    <p>Overtime it got some notorious reputation, over being a Cruelty Squad "ripoff" even if it isn't.</p>
+    <p>The game received over 100K+ visits within 4 months, however got age restricted for Violent Content & Gore, resulting into the game getting reuploaded with some tweaks in design. And we've decided to discontinue working on this game. Fuck you roblox.</p>
+    <br>
+    <p>I've worked on Models, Story, Level Design, Sound Design, and music for this game.</p>
+    <p>However the story didn't make it fully into the final product, so i'd love to write it down here.</p>
+    <br>
+    <p>The main character is already dead, but he was kicked out of heaven because God is an egoist sociopath (this is a constant cycle) in short, and the main character is angry at the whole world where no one is unique and everyone behaves the same. He takes revenge on everyone the same way, slowly making his way to the angelic dimension to stop this cycle and destroy the world, but he failed and ended up being the same jailer who was originally in heaven. By completing his missions, he slowly collects his memory.</p>
+    <br>
+    <p>The whole campaign is a path to the TDGH² LABS to get into the angelic world and destroy the whole world. The whole point of the game is that the player is no different from the other NPCs in the game, and after completing the game, another angel is going to take his place.</p>
+    <br>
+    <p>The government has built TDGH² LABS to develop & test various biochemical weaponry. Their most powerful biochemical weapon was the Red Gas. They would spread the gas across cities that were nearby the labs to lower the country's population to stabilize the state economy. By inhaling this gas, all vital organs will slowly begin to burn and the skin of the body will melt. Once enough people were killed, soldiers with gas masks would go out and collect what was left of the civilians. Human flesh was required in order to create experimental creatures like the Suicide Bombers and other stuff.</p>
+    <br>
+    <p>Before becoming an angel Gameslop HQ was the place where the protagonist was working at before being fired, he decided to take revenge and kill everyone including his boss. He wasn't able to kill everyone in the HQ, so he decides to track down every employee that has ever worked there, and kill them later. The last remaining employees were killed in a Café nearby the HQ.</p>
+    <br>
+    <p>The protagonist's family members were slaughtered by the cultists and their body parts were placed in coffins that are scattered around the house.</p>
+    `
+  },
+
+  'Forgotten': {
+    folder: 'forgotten',
+    screenshots: 0,
+    meta: {
+      status:    'Cancelled',
+      duration:  '',
+      type:      '',
+      programs:  '',
+      languages: '',
+    },
+    links: [],
+    description: `<p>Your description here.</p>`
+  },
+
+  'ESCAPE FROM LORA': {
+    folder: 'efl',
+    screenshots: 6,
+    meta: {
+      status:    'Complete',
+      duration:  '6 months',
+      type:      'GMOD Addon',
+      programs:  'Hammer++, VTFEdit, Notepad++, VMT Editor, xwad, Visual Studio Code, FL Studio 21, PaintDOTNet, Audacity, Crowbar, Blender',
+      languages: 'GLua',
+    },
+    links: [],
+    description: `
+    <p>A joke horror mod for Garry's Mod made by me and vityhysa out of boredom. What started as a small joke project later turned into a more serious mod during development.</p>
+    <br>
+    <p>"A sequel to Paranaphobia, you play as Jason Worthweller, waking up from the nightmare, you realize that your dog is missing. You have decided to ignore this fact, and go to your office. The office is empty, nobody is in the office, however there is something in the basement, waiting for you."</p>
+    <br>
+    <p>It was originally made as a short joke mod for my friends, which is reflected in its name Lora is vityhysa's dog.</p>
+    <br>
+    <p>I eventually got bored of making short maps in GMod, so I decided to turn it into a full bait-and-switch horror mod that was both fun and somewhat scary.</p>
+    <p>Later in development, after the unfinished version got uploaded to the Workshop, I decided to take the mod in a new direction. The next levels of the mod became much more serious and had an actual plot.</p>
+    <p>However, this didn't work out well. The mix of unfunny jokes and serious horror tones didn't really work out. Would you play a horror mod that randomly throws in unfunny genz shit alongside serious themes? I don't think so.</p>
+    <p>Still, I don't regret developing this mod at all. It was really fun to make, and it motivated me to start working on my next horror mod for GMod - Nycto.</p>
+    `
+  },
+
+  'The Rushing Evil': {
+    folder: 'therushingevil',
+    screenshots: 0,
+    meta: {
+      status:    'Complete',
+      duration:  '',
+      type:      '',
+      programs:  '',
+      languages: '',
+    },
+    links: [],
+    description: `<p>Your description here.</p>`
+  },
+
+  'Bloodleak': {
+    folder: 'bloodleak',
+    screenshots: 0,
+    meta: {
+      status:    'Complete',
+      duration:  '',
+      type:      '',
+      programs:  '',
+      languages: '',
+    },
+    links: [],
+    description: `<p>Your description here.</p>`
+  },
+
 };
+
+
 
 function Shit_prj_openpage(name) {
   const existing = document.getElementById('page-project-detail');
   if (existing) existing.remove();
 
-  const data = PROJECT_DATA[name] || null;
-  const folder = data ? data.folder : name.toLowerCase().replace(/\s+/g, '');
+  const data            = PROJECT_DATA[name] || null;
+  const folder          = data ? data.folder : name.toLowerCase().replace(/\s+/g, '');
   const screenshotCount = data ? data.screenshots : 0;
-  const description = data ? data.description : `<p>Coming soon.</p>`;
-  const links = data ? (data.links || []) : [];
+  const description     = data ? data.description : `<p>Coming soon.</p>`;
+  const links           = data ? (data.links || []) : [];
+  const meta            = data ? (data.meta  || null) : null;
 
   const linksHTML = links.length > 0 ? `
     <div style="display:flex; gap:14px; justify-content:center; margin-top:12px; margin-bottom:8px;">
@@ -468,6 +608,16 @@ function Shit_prj_openpage(name) {
     </div>
   ` : '';
 
+  const metaHTML = meta ? `
+    <div class="prj-meta">
+      ${meta.status    ? `<div class="prj-meta-row"><span class="prj-meta-key">Project Status</span><span class="prj-meta-val">${meta.status}</span></div>`    : ''}
+      ${meta.duration  ? `<div class="prj-meta-row"><span class="prj-meta-key">Duration</span><span class="prj-meta-val">${meta.duration}</span></div>`         : ''}
+      ${meta.type      ? `<div class="prj-meta-row"><span class="prj-meta-key">Project Type</span><span class="prj-meta-val">${meta.type}</span></div>`          : ''}
+      ${meta.programs  ? `<div class="prj-meta-row"><span class="prj-meta-key">Programs Used</span><span class="prj-meta-val">${meta.programs}</span></div>`     : ''}
+      ${meta.languages ? `<div class="prj-meta-row"><span class="prj-meta-key">Languages Used</span><span class="prj-meta-val">${meta.languages}</span></div>`   : ''}
+    </div>
+  ` : '';
+
   let carouselHTML = '';
 
   if (screenshotCount > 0) {
@@ -476,7 +626,7 @@ function Shit_prj_openpage(name) {
       thumbs += `<div class="prj-thumb${i === 1 ? ' active' : ''}" data-idx="${i}"
         style="background-image:url('stuff/screenshots/${folder}/${i}.png')"></div>`;
     }
-    
+
     carouselHTML = `
       <div class="prj-carousel-row">
         <img class="prj-detail-icon" src="stuff/prj_${folder}.png" alt="${name}">
@@ -508,6 +658,7 @@ function Shit_prj_openpage(name) {
       <img class="bleed-img" src="stuff/bleed.png" alt="">
       <div class="page-content prj-detail-content">
         ${carouselHTML}
+        ${metaHTML}
         <div class="prj-detail-desc">${description}</div>
       </div>
       <div class="footer"><img src="stuff/logo.png" alt="nolit47"></div>
@@ -532,6 +683,8 @@ function Shit_prj_openpage(name) {
   });
 }
 
+
+
 // lightbox
 
 function Shit_openlightbox(src) {
@@ -545,49 +698,95 @@ function Shit_openlightbox(src) {
   document.body.appendChild(lb);
 }
 
-// Karusel
-let carouselIndex = 1;
-let carouselTotal = 0;
-let carouselFolder = '';
 
-function fuckyfuckyCarouselSteppySteppyStep(dir) {
-  const img = document.getElementById('carousel-img');
-  const cur = document.getElementById('carousel-cur');
+
+// Karusel
+let carouselIndex  = 1;
+let carouselTotal  = 0;
+let carouselFolder = '';
+let carouselAutoTimer = null;
+const CAROUSEL_AUTO_DELAY = 5000;
+
+function carouselResetAutoTimer() {
+  clearTimeout(carouselAutoTimer);
+  if (carouselTotal > 1) {
+    carouselAutoTimer = setTimeout(() => {
+      fuckyfuckyCarouselSteppySteppyStep(1, true);
+    }, CAROUSEL_AUTO_DELAY);
+  }
+}
+
+function carouselStopAutoTimer() {
+  clearTimeout(carouselAutoTimer);
+  carouselAutoTimer = null;
+}
+
+function carouselSetImage(idx, skipTimerReset) {
+  const img    = document.getElementById('carousel-img');
+  const cur    = document.getElementById('carousel-cur');
   const thumbs = document.querySelectorAll('.prj-thumb');
-  if (!img || carouselTotal === 0) return;
+  if (!img) return;
+
+  img.style.transition = 'none';
+  img.style.opacity    = '0';
+  img.style.transform  = 'scale(0.88)';
+
+  void img.offsetWidth;
+
+  img.src = `stuff/screenshots/${carouselFolder}/${idx}.png`;
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      img.style.transition = 'opacity 0.25s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1)';
+      img.style.opacity    = '1';
+      img.style.transform  = 'scale(1)';
+    });
+  });
+
+  if (cur) cur.textContent = idx;
+  thumbs.forEach(t => t.classList.toggle('active', +t.dataset.idx === idx));
+
+  if (!skipTimerReset) carouselResetAutoTimer();
+}
+
+function fuckyfuckyCarouselSteppySteppyStep(dir, isAuto) {
+  if (carouselTotal === 0) return;
 
   carouselIndex = ((carouselIndex - 1 + dir + carouselTotal) % carouselTotal) + 1;
-  img.style.opacity = '0';
-  setTimeout(() => {
-    img.src = `stuff/screenshots/${carouselFolder}/${carouselIndex}.png`;
-    img.style.opacity = '1';
-  }, 150);
-  if (cur) cur.textContent = carouselIndex;
-  thumbs.forEach(t => t.classList.toggle('active', +t.dataset.idx === carouselIndex));
+  carouselSetImage(carouselIndex, !!isAuto);
+
+  if (isAuto) {
+
+    carouselAutoTimer = setTimeout(() => {
+      fuckyfuckyCarouselSteppySteppyStep(1, true);
+    }, CAROUSEL_AUTO_DELAY);
+  }
 }
 
 function initCarousel(folder, total) {
-  carouselIndex = 1;
-  carouselTotal = total;
+  carouselIndex  = 1;
+  carouselTotal  = total;
   carouselFolder = folder;
+
+  const img = document.getElementById('carousel-img');
+  if (img) { img.style.transition = ''; img.style.transform = ''; img.style.opacity = '1'; }
 
   document.querySelectorAll('.prj-thumb').forEach(t => {
     t.addEventListener('click', () => {
       carouselIndex = +t.dataset.idx;
-      const img = document.getElementById('carousel-img');
-      const cur = document.getElementById('carousel-cur');
-      img.style.opacity = '0';
-      setTimeout(() => {
-        img.src = `stuff/screenshots/${folder}/${carouselIndex}.png`;
-        img.style.opacity = '1';
-      }, 150);
-      if (cur) cur.textContent = carouselIndex;
-      document.querySelectorAll('.prj-thumb').forEach(x => x.classList.toggle('active', x === t));
+      carouselSetImage(carouselIndex);
     });
+  });
+
+  carouselResetAutoTimer();
+
+  document.querySelectorAll('.carousel-arrow').forEach(btn => {
+    btn.addEventListener('click', () => carouselResetAutoTimer());
   });
 }
 
 function prj_closeprjpage() {
+  carouselStopAutoTimer();
   const detail = document.getElementById('page-project-detail');
   if (detail) detail.remove();
   navigate('projects');
