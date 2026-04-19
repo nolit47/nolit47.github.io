@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BEACH</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      padding: 60px 24px;
+      animation: beachIn 2s ease forwards;
+    }
+
+    @keyframes beachIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    #beach-wrap {
+      position: relative;
+      max-width: min(1200px, 98vw);
+      width: 100%;
+    }
+
+    #beach-img,
+    #beach-ghost {
+      display: block;
+      width: 100%;
+      object-fit: contain;
+    }
+
+    #beach-img {
+      position: relative;
+      z-index: 0;
+    }
+
+    #beach-ghost {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0.4;
+      z-index: 1;
+      animation: uminekoblur 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes uminekoblur {
+      from { transform: translate(-15px, -15px); }
+      to   { transform: translate(7px, 5px); }
+    }
+
+    #beach-text {
+      font-family: 'MingLiU', 'Mingliu', '細明體', serif;
+      color: #00bcd4;
+      text-align: center;
+      letter-spacing: 0.08em;
+      user-select: none;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease;
+    }
+
+    #beach-text span {
+      display: inline-block;
+      position: relative;
+    }
+
+    #beach-exit {
+      position: fixed;
+      top: 18px;
+      right: 24px;
+      font-family: monospace;
+      font-size: 22px;
+      color: rgba(0,0,0,0.12);
+      cursor: pointer;
+      transition: color 0.3s;
+      z-index: 10;
+      user-select: none;
+    }
+    #beach-exit:hover { color: rgba(0,0,0,0.4); }
+  </style>
+</head>
+<body>
+
+  <div id="beach-exit" onclick="goBack()">&#x2715;</div>
+
+  <div id="beach-wrap">
+    <img id="beach-img"   src="stuff/beach.png" alt="">
+    <img id="beach-ghost" src="stuff/beach.png" alt="">
+  </div>
+
+  <div id="beach-text"></div>
+
+  <script>
+    const lines = [
+    "it's so beautiful here... isn't it?",
+    "the waves never stop... they drag everything down eventually.",
+    "I used to think the sea was lonely.",
+    "now i know it's full of things that were never allowed to leave.",
+    "stay here with me a little longer...",
+    "please... my dear...",
+    "you wouldn't really leave me...",
+    "not after i became an angel...",
+    "you can't leave me here alone in the light.",
+    "please..."
+    ];
+
+    const container = document.getElementById('beach-text');
+    const CHAR_SPEED  = 55;
+    const HOLD_MS     = 5000;
+    const FADE_MS     = 800;
+    const START_DELAY = 1800;
+
+    const writeSound = new Audio('stuff/snd/write.wav');
+    writeSound.loop = true;
+
+    function typeLine(text, onDone) {
+      container.style.opacity = '1';
+      container.innerHTML = '';
+
+      const spans = text.split('').map(ch => {
+        const span = document.createElement('span');
+        const size = (28 + Math.random() * 2).toFixed(2);
+        const rise = (Math.random() * 2 - 4).toFixed(2);
+        span.style.fontSize = size + 'px';
+        span.style.top = rise + 'px';
+        span.textContent = ch === ' ' ? '\u00A0' : ch;
+        return span;
+      });
+
+      writeSound.currentTime = 0;
+      writeSound.play().catch(() => {});
+
+      spans.forEach((span, i) => {
+        setTimeout(() => {
+          container.appendChild(span);
+        }, i * CHAR_SPEED);
+      });
+
+      setTimeout(() => {
+        writeSound.pause();
+        writeSound.currentTime = 0;
+        onDone();
+      }, spans.length * CHAR_SPEED + 80);
+    }
+
+    function fadeLine(onDone) {
+      container.style.opacity = '0';
+      setTimeout(onDone, FADE_MS);
+    }
+
+    function fadeOutPage() {
+      document.body.style.animation = 'none';
+      document.body.style.opacity = '1';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.body.style.transition = 'opacity 3s ease';
+          document.body.style.opacity = '0';
+        });
+      });
+    }
+
+    function showLine(index) {
+      const text = lines[index];
+      const isLast = index === lines.length - 1;
+      typeLine(text, () => {
+        if (isLast) {
+          setTimeout(fadeOutPage, HOLD_MS);
+          return;
+        }
+        setTimeout(() => {
+          fadeLine(() => {
+            setTimeout(() => showLine(index + 1), 300);
+          });
+        }, HOLD_MS);
+      });
+    }
+
+    setTimeout(() => showLine(0), START_DELAY);
+
+    const waves = new Audio('stuff/snd/waves.wav');
+    waves.loop = true;
+    waves.volume = 0.7;
+
+    function tryWaves() {
+      waves.play().catch(() => {});
+      document.removeEventListener('click',     tryWaves);
+      document.removeEventListener('keydown',   tryWaves);
+      document.removeEventListener('mousemove', tryWaves);
+    }
+
+    waves.play().catch(() => {
+      document.addEventListener('click',     tryWaves);
+      document.addEventListener('keydown',   tryWaves);
+      document.addEventListener('mousemove', tryWaves);
+    });
+
+    function goBack() {
+      waves.pause();
+      waves.currentTime = 0;
+      writeSound.pause();
+      writeSound.currentTime = 0;
+      document.body.style.animation = 'none';
+      document.body.style.opacity = '1';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.body.style.transition = 'opacity 1s ease';
+          document.body.style.opacity = '0';
+          setTimeout(() => { window.history.back(); }, 1000);
+        });
+      });
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') goBack();
+    });
+  </script>
+</body>
+</html>

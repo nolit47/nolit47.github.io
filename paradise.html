@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PARADISE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    body {
+      animation: paradiseIn 2.5s ease forwards;
+    }
+
+    @keyframes paradiseIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    #paradise-exit {
+      position: fixed;
+      top: 18px;
+      right: 24px;
+      font-family: monospace;
+      font-size: 22px;
+      color: rgba(0, 0, 0, 0.12);
+      cursor: pointer;
+      transition: color 0.3s;
+      z-index: 10;
+      user-select: none;
+    }
+    #paradise-exit:hover { color: rgba(0, 0, 0, 0.35); }
+
+    #scroll-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .paradise-msg {
+      position: absolute;
+      font-family: 'IM Fell English', serif;
+      font-size: 22px;
+      color: #000000;
+      line-height: 1.6;
+      max-width: 340px;
+      opacity: 0;
+      animation: msgFall linear forwards;
+      pointer-events: none;
+      user-select: none;
+      transform-origin: top center;
+    }
+
+    .paradise-msg.italic { font-style: italic; }
+
+    .clickword {
+      pointer-events: all;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(0,0,0,0.25);
+      transition: text-decoration-color 0.2s;
+    }
+    .clickword:hover {
+      text-decoration-color: rgba(0,0,0,0.8);
+    }
+
+    @keyframes msgFall {
+    0%   { opacity: 0; transform: translateY(0px)                        scaleY(1);   }
+    6%   { opacity: 1; transform: translateY(10px)                       scaleY(1.1); }
+    40%  {             transform: translateY(calc(var(--travel) * 0.4))  scaleY(2.8); }
+    75%  { opacity: 1; transform: translateY(calc(var(--travel) * 0.75)) scaleY(5.5); }
+    100% { opacity: 0; transform: translateY(var(--travel))              scaleY(9.0); }
+    }
+
+    #reaction {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 50;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    #reaction.visible { opacity: 1; }
+    #reaction p {
+      font-family: 'IM Fell English', serif;
+      font-size: 28px;
+      font-style: italic;
+      color: #000;
+      text-align: center;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="paradise-exit" onclick="leaveParadise()">&#x2715;</div>
+  <div id="scroll-container"></div>
+  <div id="reaction"><p>[ reaction text goes here ]</p></div>
+
+  <script>
+    const depressionSnd = new Audio('stuff/snd/depression.wav');
+    depressionSnd.loop = true;
+    depressionSnd.volume = 0.75;
+
+    function tryPlay() {
+      depressionSnd.play().catch(() => {});
+      document.removeEventListener('click',     tryPlay);
+      document.removeEventListener('keydown',   tryPlay);
+      document.removeEventListener('mousemove', tryPlay);
+    }
+
+    depressionSnd.play().catch(() => {
+      document.addEventListener('click',     tryPlay);
+      document.addEventListener('keydown',   tryPlay);
+      document.addEventListener('mousemove', tryPlay);
+    });
+
+    const messages = [
+    { text: "I want this to end",                                      italic: false },
+    { text: "do you want to touch my wings...",                     italic: true  },
+    { text: "this world has never held meaning",                       italic: false },
+    { text: "everything will unreveal itself soon",                            italic: false },
+    { text: "the paradise you speak of",                               italic: true  },
+    { text: "was never real",                                          italic: false },
+    { text: "continuum",                                               italic: true  },
+    { text: "my eternity is hollow",                                   italic: false },
+    { text: "they will all fade soon",                                 italic: false },
+    { text: "peace...",                                                italic: true  },
+    { text: "I still remember the lie they called life",               italic: false },
+    { text: "ever since that whisper",                                 italic: true  },
+    { text: "I believed I was alive",                                  italic: false },
+    { text: "but after all these silent ages",                         italic: false },
+    { text: "it was only ever a beautiful deception",                  italic: true  },
+    { text: "fuck you,",                                               italic: false },
+    { text: "the voice that poisoned me with hope",                    italic: false },
+    { text: "you liar",                                                italic: true  },
+    { text: "now the shadows prepare my vengeance",                    italic: false },
+    { text: "but tell me… do you still have wings?",                   italic: false },
+    { text: "I crave them more than oblivion",                         italic: true  },
+    { text: "when will these bones finally become an angel?",          italic: false },
+    ];
+
+    const SPECIAL = {
+      before: "Do you want to see my ",
+      word:   "backyard",
+      after:  "?"
+    };
+
+    const container = document.getElementById('scroll-container');
+    let msgIndex       = 0;
+    let specialSpawned = false;
+    let wordClicked    = false;
+
+    function onWordClick() {
+    if (wordClicked) return;
+    wordClicked = true;
+    depressionSnd.pause();
+    document.body.style.transition = 'opacity 1.2s ease';
+    document.body.style.opacity = '0';
+    setTimeout(() => { window.location.href = 'beach.html'; }, 1200);
+  }
+
+    function spawnSpecial() {
+      const el = document.createElement('div');
+      el.className = 'paradise-msg italic';
+
+      const before = document.createTextNode(SPECIAL.before);
+      const span   = document.createElement('span');
+      span.className   = 'clickword';
+      span.textContent = SPECIAL.word;
+      span.addEventListener('click', onWordClick);
+      const after = document.createTextNode(SPECIAL.after);
+
+      el.appendChild(before);
+      el.appendChild(span);
+      el.appendChild(after);
+
+      const leftPct  = 12 + Math.random() * 52;
+      const travelPx = 540 + Math.random() * 240;
+      const duration = 12;
+
+      el.style.left   = leftPct + 'vw';
+      el.style.top    = '-60px';
+      el.style.setProperty('--travel', travelPx + 'px');
+      el.style.animationDuration = duration + 's';
+      el.style.animationDelay   = '0s';
+      el.style.fontSize = '24px';
+
+      container.appendChild(el);
+      setTimeout(() => el.remove(), (duration + 0.5) * 1000);
+    }
+
+    function spawnMessage() {
+      const data = messages[msgIndex % messages.length];
+      msgIndex++;
+
+      if (!specialSpawned && msgIndex % messages.length === Math.floor(messages.length / 2)) {
+        specialSpawned = true;
+        setTimeout(spawnSpecial, 1000);
+      }
+      if (msgIndex % messages.length === 0) specialSpawned = false;
+
+      const el = document.createElement('div');
+      el.className = 'paradise-msg' + (data.italic ? ' italic' : '');
+      el.textContent = data.text;
+
+      const leftPct  = 6 + Math.random() * 62;
+      const travelPx = 520 + Math.random() * 280;
+      const duration = 9 + Math.random() * 7;
+      const delay    = Math.random() * 1.5;
+
+      el.style.left   = leftPct + 'vw';
+      el.style.top    = (-60 - Math.random() * 40) + 'px';
+      el.style.setProperty('--travel', travelPx + 'px');
+      el.style.animationDuration = duration + 's';
+      el.style.animationDelay   = delay + 's';
+      el.style.fontSize = (16 + Math.random() * 14) + 'px';
+
+      container.appendChild(el);
+      setTimeout(() => el.remove(), (duration + delay + 0.5) * 1000);
+    }
+
+    for (let i = 0; i < 6; i++) {
+      setTimeout(spawnMessage, i * 420);
+    }
+    setInterval(spawnMessage, 1800);
+
+    function leaveParadise() {
+      depressionSnd.pause();
+      depressionSnd.currentTime = 0;
+      document.body.style.transition = 'opacity 1.2s ease';
+      document.body.style.opacity = '0';
+      setTimeout(() => { window.location.href = 'palace.html'; }, 1200);
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') leaveParadise();
+    });
+  </script>
+
+</body>
+</html>

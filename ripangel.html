@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>翼を裂いて</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&display=swap">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    #angel-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      padding: 60px 24px;
+      animation: shakeContainer 0.5s ease-in-out infinite;
+    }
+
+    @keyframes shakeContainer {
+      0%   { transform: translate(0px,  0px);  }
+      20%  { transform: translate(-1px, 1px);  }
+      40%  { transform: translate(1px,  -1px); }
+      60%  { transform: translate(-1px, 0px);  }
+      80%  { transform: translate(1px,  1px);  }
+      100% { transform: translate(0px,  0px);  }
+    }
+
+    #angel-img {
+      display: block;
+      max-width: min(460px, 88vw);
+      image-rendering: pixelated;
+      filter: contrast(1.05) brightness(0.9) grayscale(0.15);
+      margin-bottom: 40px;
+    }
+
+    #angel-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .jp-line {
+      font-family: 'Noto Serif JP', 'Mincho', '游明朝', serif;
+      font-weight: 300;
+      color: #ff1900;
+      letter-spacing: 0.22em;
+      text-align: center;
+      line-height: 1.8;
+      user-select: none;
+      position: relative;
+      padding: 8px 18px;
+    }
+
+    .jp-line::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('stuff/bloody.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+      mix-blend-mode: screen;
+    }
+
+    .jp-line > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .jp-line.large  { font-size: clamp(22px, 4.5vw, 36px); }
+    .jp-line.medium { font-size: clamp(16px, 3vw,   24px); color: #8b1a1a; }
+    .jp-line.small  { font-size: clamp(13px, 2.2vw, 18px); color: #5a0f0f; letter-spacing: 0.35em; }
+
+    /* Y-drag: letters are pulled downward and squish/stretch */
+    .shake-letter {
+      display: inline-block;
+      transform-origin: center top;
+      animation: letterDrag var(--dur, 3s) cubic-bezier(0.4, 0, 1, 1) infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    @keyframes letterDrag {
+      0%   {
+        transform: translateY(0px)   scaleY(1)    scaleX(var(--sx, 1));
+        opacity: 1;
+      }
+      8%   {
+        transform: translateY(2px)   scaleY(1.05) scaleX(calc(var(--sx, 1) * 0.97));
+        opacity: 1;
+      }
+      30%  {
+        transform: translateY(18px)  scaleY(1.35) scaleX(calc(var(--sx, 1) * 0.78));
+        opacity: 0.9;
+      }
+      55%  {
+        transform: translateY(52px)  scaleY(1.9)  scaleX(calc(var(--sx, 1) * 0.52));
+        opacity: 0.6;
+      }
+      75%  {
+        transform: translateY(90px)  scaleY(2.6)  scaleX(calc(var(--sx, 1) * 0.35));
+        opacity: 0.25;
+      }
+      88%  {
+        transform: translateY(110px) scaleY(3.0)  scaleX(calc(var(--sx, 1) * 0.28));
+        opacity: 0;
+      }
+      89%  {
+        transform: translateY(0px)   scaleY(1)    scaleX(var(--sx, 1));
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0px)   scaleY(1)    scaleX(var(--sx, 1));
+        opacity: 1;
+      }
+    }
+
+    /* flicker pass on some lines */
+    .jp-line.flicker {
+      animation: lineFlicker 6s infinite;
+    }
+
+    @keyframes lineFlicker {
+      0%, 93%, 100% { opacity: 1;   }
+      94%            { opacity: 0.3; }
+      95%            { opacity: 1;   }
+      97%            { opacity: 0.1; }
+      98%            { opacity: 0.8; }
+    }
+
+    #exit-btn {
+      position: fixed;
+      top: 18px;
+      right: 24px;
+      font-family: monospace;
+      font-size: 22px;
+      color: rgba(255,255,255,0.12);
+      cursor: pointer;
+      transition: color 0.3s;
+      z-index: 10;
+      user-select: none;
+    }
+    #exit-btn:hover { color: rgba(255,255,255,0.5); }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+      pointer-events: none;
+      opacity: 0.35;
+      z-index: 100;
+      mix-blend-mode: overlay;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="exit-btn" onclick="goBack()">&#x2715;</div>
+
+  <div id="angel-container">
+    <img id="angel-img" src="stuff/angelreal.png" alt="">
+
+    <div id="angel-text">
+    </div>
+  </div>
+
+  <script>
+    const snd = new Audio('stuff/snd/depression2.wav');
+    snd.preload = 'auto';
+    snd.loop = true;
+
+    function tryPlay() {
+      snd.play().catch(() => {});
+      document.removeEventListener('click',     tryPlay);
+      document.removeEventListener('keydown',   tryPlay);
+      document.removeEventListener('mousemove', tryPlay);
+    }
+
+    snd.play().catch(() => {
+      document.addEventListener('click',     tryPlay);
+      document.addEventListener('keydown',   tryPlay);
+      document.addEventListener('mousemove', tryPlay);
+    });
+
+    const lines = [
+      { text: '自分の骨をすべて引き抜いて',  cls: 'large flicker', delay: 0   },
+      { text: 'そうして天使になる',           cls: 'large',         delay: 0.4 },
+      { text: '天使になれば',                 cls: 'small',         delay: 0   },
+      { text: 'みんなが私を大切にしてくれる', cls: 'medium',        delay: 0.8 },
+      { text: 'ずっと愛されたい',             cls: 'medium flicker',delay: 1.2 },
+    ];
+
+    const container = document.getElementById('angel-text');
+
+    lines.forEach(({ text, cls, delay }) => {
+      const div = document.createElement('div');
+      div.className = `jp-line ${cls}`;
+      if (delay) div.style.animationDelay = `${delay}s`;
+
+      div.innerHTML = text.split('').map((ch) => {
+        if (ch === '　' || ch === ' ') return '<span style="display:inline-block;">&ensp;</span>';
+        const sx  = (0.7 + Math.random() * 0.7).toFixed(3);
+        const dur = (2.5 + Math.random() * 4.0).toFixed(2);
+        const d   = (Math.random() * 5.0).toFixed(3);
+        return `<span class="shake-letter" style="--sx:${sx};--dur:${dur}s;--delay:${d}s">${ch}</span>`;
+      }).join('');
+
+      container.appendChild(div);
+    });
+
+    function goBack() {
+      snd.pause();
+      snd.currentTime = 0;
+      document.body.style.transition = 'opacity 1s ease';
+      document.body.style.opacity = '0';
+      setTimeout(() => { window.history.back(); }, 1000);
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') goBack();
+    });
+  </script>
+
+<script>
+  let lastTrail = 0;
+
+  document.addEventListener('mousemove', e => {
+    const now = Date.now();
+    if (now - lastTrail < 35) return;
+    lastTrail = now;
+
+    const ghost = document.createElement('img');
+    ghost.src = 'stuff/roses.png';
+    const size = 28 + Math.random() * 20;
+    ghost.style.cssText = `
+      position: fixed;
+      left: ${e.clientX}px;
+      top: ${e.clientY}px;
+      width: ${size}px;
+      height: ${size}px;
+      object-fit: cover;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%) scaleY(1);
+      opacity: 0.55;
+      mix-blend-mode: screen;
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0, 1, 1);
+      filter: contrast(1.2) saturate(1.4);
+    `;
+    document.body.appendChild(ghost);
+
+    requestAnimationFrame(() => {
+      ghost.style.opacity = '0';
+      ghost.style.transform = `translate(-50%, ${15 + Math.random() * 40}px) scaleY(${1.8 + Math.random() * 1.2}) scaleX(${0.4 + Math.random() * 0.3})`;
+    });
+
+    setTimeout(() => ghost.remove(), 750);
+  });
+</script>
+
+</body>
+</html>

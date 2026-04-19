@@ -1,9 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Jersey 10&family=Share+Tech+Mono&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Kaisei+Opti&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@100..900&display=swap');
 
 :root {
   --font-display: 'Jersey 10', monospace;
   --font-body: 'Kaisei Opti', monospace;
+  --font-body2: 'Encode Sans SC', sans-serif;
 
   --fz-display-xl:  28px;   /* #enter-btn */
   --fz-display-lg:  26px;   /* .page-content h2, .page-content body copy */
@@ -609,6 +611,79 @@ body.inner-page::after { opacity: 1; }
   gap: 8px;
   margin-top: 40px;
 }
+
+
+
+
+/* palace button */
+
+.palace-wrap {
+  margin-top: 52px;
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes palaceFlicker {
+  0%   { opacity: 1; }
+  4%   { opacity: 0.85; }
+  6%   { opacity: 1; }
+  48%  { opacity: 1; }
+  50%  { opacity: 0.6; }
+  52%  { opacity: 1; }
+  78%  { opacity: 1; }
+  80%  { opacity: 0.4; }
+  81%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes btn_palaceglow {
+  0%, 100% { text-shadow: 0 0 8px rgba(180,0,0,0.4), 0 0 24px rgba(180,0,0,0.1); }
+  50%       { text-shadow: 0 0 18px rgba(220,0,0,0.8), 0 0 48px rgba(180,0,0,0.3), 0 0 80px rgba(120,0,0,0.15); }
+}
+
+#palace-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  outline: none;
+  text-decoration: none;
+  animation: palaceFlicker 6s infinite;
+}
+
+#palace-btn:hover { animation: none; opacity: 1; }
+#palace-btn:hover .palace-line1,
+#palace-btn:hover .palace-line2 {
+  text-shadow: 0 0 22px rgba(255,0,0,0.9), 0 0 60px rgba(180,0,0,0.5);
+  letter-spacing: 0.25em;
+}
+
+.palace-line1 {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: #8a1a1a;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  animation: btn_palaceglow 3.5s ease-in-out infinite;
+  transition: text-shadow 0.3s, letter-spacing 0.4s;
+  line-height: 1.2;
+}
+
+.palace-line2 {
+  font-family: var(--font-display);
+  font-size: 9px;
+  color: #5a0000;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  transition: text-shadow 0.3s, letter-spacing 0.4s;
+  line-height: 1;
+}
+
+
 
 .prj-meta {
   border: 1px solid #2a2a2a;

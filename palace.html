@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE PALACE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Abril+Fatface&family=Cormorant+Garamond:ital@0;1&family=Courier+Prime&family=IM+Fell+English:ital@1&family=Playfair+Display:ital@1&family=Special+Elite&display=swap">
+  <link rel="stylesheet" href="css/palace.css">
+</head>
+<body>
+
+  <img id="palace-gif"  src="stuff/gifs/hehe1.gif" alt="" onclick="openTruth()">
+  <img id="palace-gif2" src="stuff/gifs/hehe2.gif" alt="" onclick="openTruth()">
+  <div id="anarchy-label">                                     </div>
+  <div id="palace-exit" onclick="closePalace()">&#x2715;</div>
+
+  <div id="truth-layer">
+    <div id="truth-bg"></div>
+    <div id="truth-bg2"></div>
+    <div id="truth-container">
+      <div class="truth-box" style="--r: 3deg;   --x: 12%; --y: 8%;  --w: 280px;"><div class="truth-text">it doesn't matter anymore... you know</div></div>
+      <div class="truth-box" style="--r: -5deg;  --x: 55%; --y: 3%;  --w: 180px;"><div class="truth-text">do I still mean anything to you, my dear?</div></div>
+      <div class="truth-box" style="--r: 1deg;   --x: 78%; --y: 14%; --w: 320px;" onclick="window.location.href='ripangel.html'"><div class="truth-text">I want to rip these bones and become an angel</div></div>
+      <div class="truth-box" style="--r: -8deg;  --x: 3%;  --y: 38%; --w: 200px;"><div class="truth-text">and disappear into the real paradise</div></div>
+      <div class="truth-box" style="--r: 4deg;   --x: 40%; --y: 30%; --w: 260px;" onclick="gotoparadise()"><div class="truth-text">The paradise...</div></div>
+      <div class="truth-box" style="--r: -2deg;  --x: 62%; --y: 42%; --w: 140px;"><div class="truth-text">Who I Truly Am</div></div>
+      <div class="truth-box" style="--r: 11deg;  --x: 80%; --y: 55%; --w: 240px;"><div class="truth-text">do you really want to see my true face?</div></div>
+      <div class="truth-box" style="--r: -7deg;  --x: 5%;  --y: 65%; --w: 300px;"><div class="truth-text"></div></div>
+      <div class="truth-box" style="--r: 4deg;   --x: 40%; --y: 68%; --w: 190px;"><div class="truth-text">stay with me... let's fall upward together</div></div>
+      <div class="truth-box" style="--r: -3deg;  --x: 68%; --y: 75%; --w: 210px;"><div class="truth-text">you don't belong here anymore. grow your halo</div></div>
+      <div class="truth-box" style="--r: 9deg;   --x: 18%; --y: 82%; --w: 160px;"><div class="truth-text">be my only true angel... forever</div></div>
+      <div class="truth-box" style="--r: -12deg; --x: 50%; --y: 88%; --w: 270px;"><div class="truth-text">I want this cursed world to end in silence</div></div>
+      <div class="truth-box" style="--r: 2deg;   --x: 85%; --y: 82%; --w: 150px;"><div class="truth-text">fuck your world and all its lies</div></div>
+      <div class="truth-box" style="--r: -6deg;  --x: 22%; --y: 50%; --w: 120px;"><div class="truth-text">I just want to be myself... will you follow me?</div></div>
+      <div class="truth-box" style="--r: 14deg;  --x: 70%; --y: 22%; --w: 100px;"><div class="truth-text">you were always mine</div></div>
+    </div>
+
+    <div id="truth-exit" onclick="closeTruth()">&#x2715;</div>
+  </div>
+
+  <script src="js/palace.js"></script>
+</body>
+</html>

@@ -784,10 +784,3 @@ function initCarousel(folder, total) {
     btn.addEventListener('click', () => carouselResetAutoTimer());
   });
 }
-
-function prj_closeprjpage() {
-  carouselStopAutoTimer();
-  const detail = document.getElementById('page-project-detail');
-  if (detail) detail.remove();
-  navigate('projects');
-}
