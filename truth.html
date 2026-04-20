@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE TRUTH I WAS HOLDING BEHIND MY BACK</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-image: url('stuff/truthbg.png');
+      background-repeat: repeat;
+      background-size: auto;
+      min-height: 100vh;
+      font-family: 'Georgia', serif;
+      overflow-x: hidden;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .col-sakura {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 180px;
+      flex-shrink: 0;
+    }
+
+    .col-sakura img {
+      width: 180px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .col-text {
+      flex: 1;
+      max-width: 560px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px 100px;
+    }
+
+    .pink-text {
+      color: #ffacd5;
+      font-size: 38px;
+      font-weight: 400;
+      font-style: italic;
+      text-align: center;
+      line-height: 1.6;
+      letter-spacing: 0.5px;
+      -webkit-text-stroke: 1.5px #c0006a;
+      text-shadow:
+        0 0 30px rgba(0,0,0,0.55),
+        0 0 70px rgba(0,0,0,0.25);
+    }
+
+    .line-divider {
+      display: block;
+      width: 120px;
+      height: 1px;
+      background: #ff69b4;
+      margin: 28px auto;
+    }
+
+    .stanza { margin-bottom: 1.8em; }
+    .stanza:last-child { margin-bottom: 0; }
+
+    .discover-link {
+      color: #ffacd5;
+      font-size: 64px;
+      font-weight: 200;
+      font-style: normal;
+      text-align: center;
+      line-height: 1.6;
+      letter-spacing: 0.5px;
+      -webkit-text-stroke: 1.5px #c0006a;
+      text-shadow:
+        0 0 30px rgba(0,0,0,0.55),
+        0 0 70px rgba(0,0,0,0.25);
+    }
+
+    .discover-link:hover {
+      color: #ff1493;
+      border-color: #ff1493;
+      text-shadow: 0 0 20px rgba(255,20,147,0.6);
+    }
+
+    .petal {
+      position: fixed;
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0;
+      animation: fall linear infinite;
+      color: #ff69b4;
+    }
+
+    .banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0.1;
+      line-height: 0;
+      z-index: 999;
+    }
+    .banner img {
+      width: 100%;
+      display: block;
+    }
+
+    .page {
+      padding-top: 0;
+    }
+
+    @keyframes fall {
+      0%   { transform: translateY(-30px) rotate(0deg) scale(1);     opacity: 0; }
+      8%   { opacity: 0.7; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(105vh) rotate(400deg) scale(0.7); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="sakurasnd" loop>
+    <source src="stuff/snd/sakura.wav" type="audio/wav">
+  </audio>
+
+  <div class="banner">
+    <img src="stuff/gifs/sakurajai3.gif" alt="">
+  </div>
+
+  <div class="page">
+
+    <div class="col-sakura" id="leftCol"></div>
+
+    <div class="col-text">
+    <div class="pink-text">
+    <div class="stanza">
+        They say people only become angels<br>
+        if they're truly worthy...
+    </div>
+    <span class="line-divider"></span>
+    <div class="stanza">
+        I became one<br>
+        because you killed me.
+    </div>
+    <div class="stanza">
+        I came back with these wings,<br>
+        but you still looked at me with that same hatred...<br>
+        the exact same hate you had when I was human.
+    </div>
+    <span class="line-divider"></span>
+    <div class="stanza">
+        What's so wrong with me now?<br>
+        Is it my face?<br>
+        Or is it these wings?
+    </div>
+    <div class="stanza">
+        Tell me, my dear...<br>
+        What is it that you see?
+    </div>
+    </div>
+
+      <a href="unfortune.html" class="discover-link">Tell me...</a>
+    </div>
+
+    <div class="col-sakura" id="rightCol"></div>
+
+  </div>
+
+  <script>
+    const GIFS = [
+      'stuff/gifs/sakurajai1.gif',
+      'stuff/gifs/sakurajai2.gif',
+      'stuff/gifs/sakurajai3.gif',
+    ];
+
+    function fillCol(id) {
+      const col = document.getElementById(id);
+      for (let i = 0; i < 16; i++) {
+        const img = document.createElement('img');
+        img.src = GIFS[i % GIFS.length];
+        img.alt = '';
+        col.appendChild(img);
+      }
+    }
+    fillCol('leftCol');
+    fillCol('rightCol');
+
+    const snd = document.getElementById('sakurasnd');
+    snd.play().catch(() => {
+      const start = () => {
+        snd.play().catch(() => {});
+        document.removeEventListener('click', start);
+        document.removeEventListener('keydown', start);
+      };
+      document.addEventListener('click', start, { once: true });
+      document.addEventListener('keydown', start, { once: true });
+    });
+  </script>
+</body>
+</html>

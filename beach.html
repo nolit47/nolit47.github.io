@@ -166,6 +166,7 @@
         requestAnimationFrame(() => {
           document.body.style.transition = 'opacity 3s ease';
           document.body.style.opacity = '0';
+          setTimeout(() => { window.location.href = 'angel.html'; }, 3000);
         });
       });
     }

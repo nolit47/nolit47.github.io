@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ANGEL</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      padding: 60px 24px;
+      opacity: 0;
+      animation: fadeIn 2.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    #angel-wrap {
+      position: relative;
+      max-width: min(900px, 90vw);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      aspect-ratio: 491 / 381;
+    }
+
+    #angel-img,
+    #angel-ghost-2,
+    #angel-ghost-1,
+    #angel2-img {
+      display: block;
+      width: 100%;
+      object-fit: contain;
+    }
+
+    #angel-img {
+      position: relative;
+      z-index: 0;
+      transition: opacity 1.4s ease;
+    }
+
+    #angel-ghost-2 {
+      position: absolute;
+      top: 0; left: 0;
+      opacity: 0.22;
+      z-index: 1;
+      pointer-events: none;
+      transition: opacity 1.4s ease;
+    }
+
+    #angel-ghost-1 {
+      position: absolute;
+      top: 0; left: 0;
+      opacity: 0.45;
+      z-index: 2;
+      pointer-events: none;
+      transition: opacity 1.4s ease;
+      mix-blend-mode: multiply;
+    }
+
+    #angel2-img {
+      position: absolute;
+      top: 0; left: 0;
+      z-index: 3;
+      opacity: 0;
+      transition: opacity 1.8s ease;
+      pointer-events: none;
+    }
+
+    #angel2-img.visible { opacity: 1; }
+
+    #angel-text {
+      margin-top: 24px;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      color: #000000;
+      font-size: 30px;
+      letter-spacing: 0.06em;
+      text-align: center;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.9s ease;
+      user-select: none;
+    }
+
+    #angel-text.visible { opacity: 1; }
+
+    #angel-text span {
+      display: inline-block;
+      position: relative;
+    }
+
+    #blackout {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 100;
+      transition: opacity 4s ease;
+    }
+
+    #blackout.active { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <div id="angel-wrap" onclick="onAngelClick()">
+    <img id="angel-img"           src="stuff/angel.png" alt="">
+    <img id="angel-ghost-2"       src="stuff/angel.png" alt="">
+    <img id="angel-ghost-1" src="stuff/angel.png" alt="">
+    <img id="angel2-img"          src="stuff/angel2unfinished.png" alt="">
+  </div>
+
+  <div id="angel-text"></div>
+  <div id="blackout"></div>
+
+  <script>
+    const ghost2l = document.getElementById('angel-ghost-2');
+    let slowX = 0, slowY = 0;
+    let slowTX = -18, slowTY = -14;
+    let slowTimer = 0;
+
+    function setslowtarget() {
+      slowTX = Math.random() * 40 - 20;
+      slowTY = Math.random() * 34 - 17;
+      slowTimer = 5000 + Math.random() * 6000;
+    }
+
+    function lerpSlowAngel() {
+      slowX += (slowTX - slowX) * 0.006;
+      slowY += (slowTY - slowY) * 0.006;
+
+      ghost2l.style.transform = `translate(${slowX.toFixed(2)}px, ${slowY.toFixed(2)}px)`;
+      
+      slowTimer -= 16;
+      
+      if (slowTimer <= 0) setslowtarget();
+      requestAnimationFrame(lerpSlowAngel);
+    }
+
+    setslowtarget();
+    lerpSlowAngel();
+
+    const ghostlayerintense = document.getElementById('angel-ghost-1');
+
+    let angle = 0;
+    let speed = 0.004;
+    let targetSpeed = 0.004;
+    let speedTimer = 0;
+
+    const rx = 14;
+    const ry = 10;
+
+    function ghost_intensetick() {
+      speed += (targetSpeed - speed) * 0.008;
+      angle += speed;
+      
+      speedTimer -= 16;
+
+      if (speedTimer <= 0) {
+        targetSpeed = 0.002 + Math.random() * 0.012;
+        speedTimer = 1500 + Math.random() * 3000;
+      }
+
+      const x = Math.cos(angle) * rx;
+      const y = Math.sin(angle) * ry;
+
+      ghostlayerintense.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`;
+
+      requestAnimationFrame(ghost_intensetick);
+    }
+
+    ghost_intensetick();
+
+    const ambiencelol = new Audio('stuff/snd/beauty.wav');
+    ambiencelol.loop = true;
+    ambiencelol.volume = 0.8;
+
+    let clicked = false;
+
+    function tryambiencelol() {
+      ambiencelol.play().catch(() => {});
+      document.removeEventListener('click',     tryambiencelol);
+      document.removeEventListener('keydown',   tryambiencelol);
+      document.removeEventListener('mousemove', tryambiencelol);
+    }
+
+    ambiencelol.play().catch(() => {
+      document.addEventListener('click',     tryambiencelol, { once: true });
+      document.addEventListener('keydown',   tryambiencelol, { once: true });
+      document.addEventListener('mousemove', tryambiencelol, { once: true });
+    });
+
+    function onAngelClick() {
+      if (clicked) return;
+      clicked = true;
+
+      ambiencelol.pause();
+      ambiencelol.currentTime = 0;
+
+      document.getElementById('angel-img').style.opacity           = '0';
+      document.getElementById('angel-ghost-2').style.opacity       = '0';
+      document.getElementById('angel-ghost-1').style.opacity = '0';
+
+      setTimeout(() => {
+        document.getElementById('angel2-img').classList.add('visible');
+      }, 700);
+
+      setTimeout(() => typewriter_start(), 3200);
+
+      setTimeout(() => {
+        document.getElementById('blackout').classList.add('active');
+      }, 9200);
+
+      setTimeout(() => {
+        window.location.href = 'icryblood.html';  // 
+      }, 13400);
+    }
+
+    const textEl = document.getElementById('angel-text');
+
+    function typewriter_start() {
+      const message = 'Why did I become like this...';
+
+      textEl.classList.add('visible');
+      textEl.innerHTML = '';
+      let i = 0;
+      function next() {
+        if (i >= message.length) return;
+        const span = document.createElement('span');
+        span.textContent = message[i] === ' ' ? '\u00A0' : message[i];
+        textEl.appendChild(span);
+        i++;
+        setTimeout(next, 120 + Math.random() * 80);
+      }
+      next();
+    }
+
+  </script>
+</body>
+</html>

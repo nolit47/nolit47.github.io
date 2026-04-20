@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I cry blood when i see your disgusting face</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      opacity: 0;
+      animation: fadeIn 3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .shittedialogue-window {
+      width: min(540px, 92vw);
+      border: 2px solid #6a8eae;
+      border-radius: 6px 6px 4px 4px;
+      box-shadow:
+        inset 1px 1px 0 #d4e8f7,
+        0 4px 24px rgba(0, 0, 0, 0.85),
+        0 0 0 1px #1a3a5c;
+      font-family: 'Tahoma', 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .shittedialogue-titlebar {
+      background: linear-gradient(180deg, #4a90d9, #2262ad 45%, #1a56a0 50%, #1e60b0);
+      padding: 4px 6px 5px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+
+    .shittedialogue-title-text {
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .shittedialogue-close {
+      width: 21px;
+      height: 21px;
+      background: linear-gradient(180deg, #e8605a, #c0322b);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .shittedialogue-close svg {
+      width: 9px;
+      height: 9px;
+    }
+
+    .shittedialogue-body {
+      background: #ece9d8;
+      padding: 10px 12px 14px;
+    }
+
+    .shittedialogue-label {
+      font-size: 12px;
+      color: #000;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .shittedialogue-img-panel {
+      background: #e8c8d0;
+      border: 1px solid #b090a0;
+      margin-bottom: 10px;
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .shittedialogue-img-panel img {
+      width: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .shittedialogue-input-row {
+      display: flex;
+    }
+
+    .shittedialogue-input {
+      flex: 1;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      color: #fff;
+      background: #000;
+      border: 2px inset #555;
+      border-right: none;
+      padding: 6px 10px;
+      outline: none;
+      caret-color: #fff;
+      letter-spacing: 0.04em;
+    }
+
+    .shittedialogue-input::placeholder {
+      color: #404060;
+    }
+
+    .shittedialogue-input:focus {
+      border-color: #7799bb;
+    }
+
+    .shittedialogue-btn {
+      font-family: 'Tahoma', sans-serif;
+      font-size: 12px;
+      color: #000;
+      background: linear-gradient(180deg, #f5f4ef, #dedad0);
+      border: 1px solid #888;
+      border-left: none;
+      padding: 6px 16px;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      transition: background 0.1s;
+    }
+
+    .shittedialogue-btn:hover {
+      background: linear-gradient(180deg, #e8e4de, #ccc8be);
+    }
+
+    .shittedialogue-btn:active {
+      background: linear-gradient(180deg, #ccc8be, #e8e4de);
+      box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes wrongWriteSHAKE {
+      0%   { transform: translateX(0); }
+      15%  { transform: translateX(-7px); }
+      30%  { transform: translateX(7px); }
+      50%  { transform: translateX(-5px); }
+      70%  { transform: translateX(5px); }
+      85%  { transform: translateX(-2px); }
+      100% { transform: translateX(0); }
+    }
+
+    .shake {
+      animation: wrongWriteSHAKE 0.4s ease;
+    }
+
+    #flash {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 200;
+      transition: opacity 0.08s ease;
+    }
+
+    #flash.slam {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #flash.fade-out {
+      opacity: 0;
+      transition: opacity 3.4s ease;
+    }
+
+    #face-screen {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 100;
+      transition: opacity 0s;
+    }
+
+    #face-screen.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #face-img {
+      max-width: 92vw;
+      max-height: 92vh;
+      object-fit: contain;
+      display: block;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="shittedialogue-window" id="win">
+    <div class="shittedialogue-titlebar">
+      <span class="shittedialogue-title-text">Please enter</span>
+      <div class="shittedialogue-close">
+        <svg viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="1" y1="1" x2="8" y2="8" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="8" y1="1" x2="1" y2="8" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="shittedialogue-body">
+      <span class="shittedialogue-label">Enter the following:</span>
+
+      <div class="shittedialogue-img-panel">
+        <img src="stuff/hellosweetie.png" alt="">
+      </div>
+
+      <div class="shittedialogue-input-row" id="input-row">
+        <input
+          class="shittedialogue-input"
+          id="cry-input"
+          type="text"
+          placeholder="ENTER..."
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button class="shittedialogue-btn" id="enter-btn">enter</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="flash"></div>
+  <div id="face-screen">
+    <img id="face-img" src="stuff/disgustingface2.png" alt="">
+  </div>
+
+  <script>
+    const ANSWER = "I cry blood when i see your disgusting face";
+
+    const bgm = new Audio('stuff/snd/shi_ga_chikai.wav');
+    bgm.loop = true;
+    bgm.volume = 0.75;
+
+    const facebreak = new Audio('stuff/snd/facebreak.wav');
+    const ambient = new Audio('stuff/snd/empty.wav');
+
+    ambient.loop = true;
+    ambient.volume = 1;
+
+    bgm.play().catch(() => {
+      const startBgm = () => {
+        bgm.play().catch(() => {});
+        document.removeEventListener('click', startBgm);
+        document.removeEventListener('keydown', startBgm);
+        document.removeEventListener('mousemove', startBgm);
+      };
+      document.addEventListener('click', startBgm, { once: true });
+      document.addEventListener('keydown', startBgm, { once: true });
+      document.addEventListener('mousemove', startBgm, { once: true });
+    });
+
+    const input      = document.getElementById('cry-input');
+    const inputRow   = document.getElementById('input-row');
+    const flash      = document.getElementById('flash');
+    const faceScreen = document.getElementById('face-screen');
+    const faceImg    = document.getElementById('face-img');
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') trySubmit();
+    });
+
+    document.getElementById('enter-btn').addEventListener('click', trySubmit);
+
+    function trySubmit() {
+      if (input.value === ANSWER) {
+        onCorrect();
+      } else {
+
+        inputRow.classList.remove('shake');
+
+        void inputRow.offsetWidth;
+
+        inputRow.classList.add('shake');
+
+        input.value = '';
+
+        inputRow.addEventListener('animationend', () => {
+          inputRow.classList.remove('shake');
+        }, { once: true });
+      }
+    }
+
+    function onCorrect() {
+      bgm.pause();
+      facebreak.play().catch(() => {});
+
+      flash.classList.add('slam');
+
+      setTimeout(() => {
+        faceScreen.classList.add('visible');
+        ambient.play().catch(() => {});
+
+        setTimeout(() => {
+          flash.classList.remove('slam');
+          flash.classList.add('fade-out');
+        }, 80);
+      }, 350);
+    }
+    faceImg.addEventListener('click', () => {
+      window.location.href = 'whoami.html';
+    });
+  </script>
+</body>
+</html>
