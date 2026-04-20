@@ -784,3 +784,15 @@ function initCarousel(folder, total) {
     btn.addEventListener('click', () => carouselResetAutoTimer());
   });
 }
+
+function prj_closeprjpage() {
+  const detailPage = document.getElementById('page-project-detail');
+  if (!detailPage) return;
+
+  transitionTo(() => {
+    detailPage.remove();
+    showPage('projects');
+    document.body.classList.add('inner-page');
+    history.pushState({ page: 'projects' }, '', '#projects');
+  });
+}
