@@ -236,3 +236,7 @@ body.truth-open .stretch-box {
 .truth-box[onclick] .truth-text {
   cursor: pointer;
 }
+
+#trigger-warning {
+  transition: opacity 0.6s ease;
+}

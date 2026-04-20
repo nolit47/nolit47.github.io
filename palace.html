@@ -10,6 +10,46 @@
 </head>
 <body>
 
+<div id="cw-screen" style="
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 32px;
+">
+  <p style="
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    max-width: 500px;
+    line-height: 1.9;
+    text-align: center;
+  ">
+    WARNING<br><br>
+    This website is an art project exploring themes of grief, unrequited love, and death through poetry and imagery.<br><br>
+    It contains references to suicide and emotional suffering.<br><br>
+    Please proceed only if you are comfortable with these topics.<br><br>
+    If you are struggling, please reach out to a crisis line in your country.
+  </p>
+  <button onclick="document.getElementById('cw-screen').style.display='none'" style="
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    padding: 10px 28px;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+  ">
+    I understand, proceed
+  </button>
+</div>
+
   <img id="palace-gif"  src="stuff/gifs/hehe1.gif" alt="" onclick="openTruth()">
   <img id="palace-gif2" src="stuff/gifs/hehe2.gif" alt="" onclick="openTruth()">
   <div id="anarchy-label">                                     </div>
