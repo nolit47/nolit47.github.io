@@ -518,16 +518,73 @@ const PROJECT_DATA = {
 
   'Forgotten': {
     folder: 'forgotten',
-    screenshots: 0,
+    screenshots: 6,
     meta: {
       status:    'Cancelled',
-      duration:  '',
-      type:      '',
-      programs:  '',
-      languages: '',
+      duration:  '4 Years',
+      type:      'Roblox Game',
+      programs:  'Blender, FL Studio 20, Audacity, Roblox Studio, PaintDOTNet',
+      languages: 'LUAu',
     },
     links: [],
-    description: `<p>Your description here.</p>`
+    description: `<p>A psychological single-player horror game heavily inspired by Silent Hill and Cry of Fear developed on the Roblox engine, revolving around a protagonist who has forgotten everything and tries to regain their memories throughout the game.</p>
+<br>
+<p>Developed between 2021 and 2024, the story is unfinished, and only one chapter was fully completed.</p>
+<br>
+<p>Gameplay revolves around solving puzzles, and uncovering fragments of Henry's past while avoiding drug-addicted monsters.</p>
+<p>As the game progresses, pieces of his memories begin to surface, slowly revealing the truth behind Henry's past and Kate's disappearance.</p>
+<p>The story takes place in the fictional town of Newray, an abandoned town where Henry lived during his childhood.</p>
+<p>Much of the town's atmosphere and structure is inspired by my own city. Many of the environment's textures were photographed by me.</p>
+<p>The unique feature of this game is the constant switching between camera modes during gameplay.</p>
+<p>For example, the player may be in firstperson, but in another room, the view shifts to a fixed camera angle, similar to Silent Hill or Resident Evil.</p>
+<p>There was a lot of debate about the project's direction, as each team member had their own vision. As a result, only one chapter was successfully brought to production.</p>
+<p>The project was eventually scrapped due to a lack of developers and slow progress.</p>
+<br>
+<p>It genuinely makes me sad to realize that this project got cancelled, as it was very personal and I've spent a lot of time and effort on it.</p>
+<br>
+<p><strong>FORGOTTEN: DEV STORY (11.06.2024)</strong></p>
+
+<p>You play as Henry Metwenston.</p>
+
+<p>The game begins with a tram moving down a road, with Henry sitting inside. The camera focuses on him staring blankly out of the window being emotionless. He slowly looks away in disappointment, and the screen fades to black.</p>
+
+<p>Tape noise begins playing in the background. Text appears on a black screen:</p>
+<p>''I am alone''<br>
+''I am scared''<br>
+''I need to wake up''<br>
+''Oh.....?''<br>
+''Kate?...''</p>
+
+<p>The camera suddenly shifts to a POV of a character chained inside an asylum. The person is panicking, struggling to escape. The player is prompted to rapidly spam LMB. Eventually, he breaks free, but remains trapped in a white padded room. Suddenly, a door opens, revealing a dark void with a single light in the center. As the player reaches it, another light appears farther away.</p>
+
+<p><strong>CHAPTER 1</strong></p>
+
+<p>Henry wakes up from a nightmare, shocked and confused. Strange noises are coming from the bathroom, and he decides to investigate.</p>
+
+<p>Upon opening the door, no one is there - only a key. Henry realizes that Kate, his girlfriend, is missing. It is 5 AM, but he decides to begin searching for her.</p>
+
+<p>Leaving his apartment, Henry hears noises coming from his neighbor's apartment. Inside, everything is covered in rust, and the furniture is overturned. In the living room, there is a VHS player. A tape lies on a chair nearby. Henry inserts it.</p>
+
+<p>Text appears on the screen while something unsettling moves in the background:</p>
+<p>''Delicious''<br>
+''Bodies''<br>
+''You are next''</p>
+
+<p>After the message, a basement door slowly creaks open. The staircase is unusually long. The basement is filled with bloodstains, and a body bag hangs on the wall.</p>
+
+<p>The smell is unbearable. Henry coughs and notices a key inside the body bag. Disgusted but desperate, he pulls it out. The bag suddenly begins to move violently, startling him and causing him to fall back. After a few seconds, it goes still again. The key is covered in a foul substance.</p>
+
+<p>This key unlocks the apartment exit.</p>
+
+<p>Outside, a note flies from a window. It reads: ''Meet me at the hospital. I can help you.'' Confused but desperate, Henry decides to trust it.</p>
+
+<p>The direct road to the hospital is blocked. The only way around is through a set of abandoned apartments. Inside, everything feels long forgotten. A locked door blocks the path forward.</p>
+
+<p>Searching for a key, Henry enters a room and finds one labeled ''Emergency Exit'' on a couch. Suddenly, someone begins violently breaking down a bedroom door. It bursts open, and a deranged man lunges at Henry.</p>
+
+<p>Henry defends himself with a switchblade and manages to survive the encounter.</p>
+
+<p>Afterward, the apartment environment shifts the lights go out. Henry must escape as quickly as possible before something worse happens.</p>`
   },
 
   'ESCAPE FROM LORA': {
@@ -557,30 +614,47 @@ const PROJECT_DATA = {
 
   'The Rushing Evil': {
     folder: 'therushingevil',
-    screenshots: 0,
+    screenshots: 9,
     meta: {
-      status:    'Complete',
-      duration:  '',
-      type:      '',
-      programs:  '',
-      languages: '',
+      status:    'Cancelled',
+      duration:  '3 months',
+      type:      'Roblox Game',
+      programs:  'Blender, FL Studio 20, Audacity, Roblox Studio, PaintDOTNet',
+      languages: 'LUAu',
     },
     links: [],
-    description: `<p>Your description here.</p>`
+    description: `<p>A 4-player co-op zombie survival horror game, being developed in 2022 for atleast 3 months before getting cancelled, heavily inspired by Left 4 Dead and Resident Evil. Players can complete the campaign together, working as a team to survive against overwhelming odds.</p>
+
+  <p>The game features a weapon modification system that allows players to customize their arsenal with various attachments. Throughout the experience, survivors must travel from point A to point B while fighting off occasional zombie attacks.</p>
+
+  <p>A huge variety of mutated zombies, each with unique abilities and behavior that will try to exterminate the survivors.</p>
+  <br>
+  <p>The game takes place in a cinematic, apocalyptic setting in the city of Queensland, Canada. During a harsh winter, a nearby nuclear power plant explodes, releasing an unknown red fog that begins to spread throughout the city.</p>
+  <p>This so-called ''red fog'' infects humans with a mysterious parasite called Horpon-7 capable of taking control of its host. The infection spreads rapidly, overtaking nearly the entire population. The city is left almost empty, now overrun by infected zombies.</p>
+  <br>
+  <p>However, a small number of people manage to survive and you play as them. They are not trained soldiers, but just ordinary civilians trying to stay alive. Their goal is to escape the city and reach the nearest uninfected area.</p>
+  <p>The survivors must navigate through multiple locations, facing obstacles along the way, and reach safe rooms scattered throughout the city.</p>
+  <br>
+  <p>Overtime, the infection mutates, making the infected far more dangerous. Survivors must adapt and overcome a variety of powerful enemies.</p> `
+  
   },
 
   'Bloodleak': {
     folder: 'bloodleak',
-    screenshots: 0,
+    screenshots: 9,
     meta: {
       status:    'Complete',
-      duration:  '',
-      type:      '',
-      programs:  '',
-      languages: '',
+      duration:  '2 months',
+      type:      'Roblox Game',
+      programs:  'Blender, FL Studio 20, Audacity, Roblox Studio, PaintDOTNet',
+      languages: 'LUAu',
     },
     links: [],
-    description: `<p>Your description here.</p>`
+    description: `<p>Developed in 2021-2022, BLOODLEAK was intended to be a Quake-like FPS with a variety of unique weapons.</p>
+    <br>
+    <p>The game didn't aim to stand out like other games, instead focusing on extreme gore and combat finishers inspired by DOOM.</p>
+    <br>
+    <p>In the end, only a few weapons and several maps were ever completed. Too bad.</p>`
   },
 
 };

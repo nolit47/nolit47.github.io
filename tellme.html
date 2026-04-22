@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TELL ME WHAT WAS OUR SECRET, LISTEN TO IT</title>
+  <style>
+    body {
+      background-color: black;
+      background-image: url('stuff/dasglass.png');
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .box {
+      text-align: center;
+    }
+
+    p {
+      font-size: 12px;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    input[type="range"] {
+      width: 200px;
+      margin-bottom: 4px;
+    }
+
+    #pitchVal {
+      font-size: 13px;
+      color: #ccc;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    input[type="text"] {
+      background: black;
+      border: 1px solid #ffffff;
+      color: white;
+      font-family: Arial;
+      font-size: 20px;
+      text-align: center;
+      letter-spacing: 8px;
+      width: 140px;
+      padding: 6px;
+      display: block;
+      margin: 0 auto 10px auto;
+    }
+
+    button {
+      background: black;
+      border: 1px solid #ffffff;
+      color: #ffffff;
+      font-family: Arial;
+      font-size: 11px;
+      padding: 6px 20px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #111;
+    }
+
+    #msg {
+      font-size: 11px;
+      color: #ffffff;
+      margin-top: 8px;
+      height: 16px;
+    }
+
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: black;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #overlay.show {
+      display: flex;
+    }
+
+    #overlay p {
+      font-size: 28px;
+      color: #ccc;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <p></p>
+  <input type="range" id="slider" min="0.1" max="6.66" step="0.01" value="0.10">
+  <span id="pitchVal">0.10 Hz</span>
+
+  <p>enter the code</p>
+  <input type="text" id="code" maxlength="4" placeholder="LISTEN" autocomplete="off">
+  <button onclick="check()">enter</button>
+  <div id="msg"></div>
+</div>
+
+<div id="overlay">
+  <p>you knew it all along...</p>
+</div>
+
+<script>
+  let ctx, buffer, source;
+
+  let fakenrate = 0.10;
+  let tokydrift = false;
+  let driftPhase = 0;
+  let noisePhase = 0;
+  let timerforidle = null;
+  let animframe = null;
+  let hasstarted = false;
+
+  function GETRangeForDrift(base) {
+    return base * 0.35;
+  }
+
+  function radiodrifttick() {
+    if (!tokydrift) return;
+    driftPhase += 0.003;
+    noisePhase += 0.017;
+
+    const drift = GETRangeForDrift(fakenrate);
+    const slow = Math.sin(driftPhase) * drift;
+    const noise = Math.sin(noisePhase * 3.7 + 1.2) * drift * 0.18;
+    const rate = Math.max(0.05, fakenrate + slow + noise);
+
+    if (source && ctx) {
+
+      source.playbackRate.linearRampToValueAtTime(rate, ctx.currentTime + 0.1);
+
+    }
+
+    document.getElementById('pitchVal').textContent = rate.toFixed(2) + ' Hz';
+    animframe = requestAnimationFrame(radiodrifttick);
+  }
+
+  function radiodriftstart() {
+    if (tokydrift) return;
+
+    tokydrift = true;
+
+    driftPhase = Math.random() * Math.PI * 2;
+    noisePhase = Math.random() * Math.PI * 2;
+    animframe = requestAnimationFrame(radiodrifttick);
+  }
+
+  function radiodriftstop() {
+    tokydrift = false;
+    if (animframe) cancelAnimationFrame(animframe);
+    if (source && ctx) {
+      source.playbackRate.linearRampToValueAtTime(fakenrate, ctx.currentTime + 0.3);
+    }
+    document.getElementById('pitchVal').textContent = fakenrate.toFixed(2) + ' Hz';
+  }
+
+  async function startAudio() {
+
+    if (hasstarted) return;
+    
+    hasstarted = true;
+    try {
+
+      ctx = new AudioContext();
+      const res = await fetch('stuff/snd/code.wav');
+      const raw = await res.arrayBuffer();
+      buffer = await ctx.decodeAudioData(raw);
+      source = ctx.createBufferSource();
+      source.buffer = buffer;
+      source.loop = true;
+      source.playbackRate.value = fakenrate;
+      source.connect(ctx.destination);
+      source.start();
+      timerforidle = setTimeout(radiodriftstart, 1200);
+    } catch(e) {
+      console.warn('audio failed:', e);
+    }
+  }
+
+  document.addEventListener('click', startAudio, { once: true });
+
+  document.getElementById('slider').addEventListener('input', function() {
+    fakenrate = parseFloat(this.value);
+    radiodriftstop();
+    clearTimeout(timerforidle);
+    timerforidle = setTimeout(radiodriftstart, 1200);
+  });
+
+  function check() {
+    const val = document.getElementById('code').value.trim();
+    const msg = document.getElementById('msg');
+    if (val === '0609') {
+      document.getElementById('overlay').classList.add('show');
+      setTimeout(() => { window.location.href = 'unfortune.html'; }, 3000);
+    } else {
+      msg.textContent = 'wrong.';
+      document.getElementById('code').value = '';
+      setTimeout(() => { msg.textContent = ''; }, 800);
+    }
+  }
+
+  document.getElementById('code').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') check();
+  });
+</script>
+
+</body>
+</html>

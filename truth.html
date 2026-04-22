@@ -21,6 +21,7 @@
       display: flex;
       align-items: stretch;
       justify-content: center;
+      padding-top: 0;
     }
 
     .col-sakura {
@@ -84,6 +85,10 @@
       text-shadow:
         0 0 30px rgba(0,0,0,0.55),
         0 0 70px rgba(0,0,0,0.25);
+      text-decoration: none;
+      display: block;
+      margin-top: 32px;
+      cursor: pointer;
     }
 
     .discover-link:hover {
@@ -109,14 +114,11 @@
       opacity: 0.1;
       line-height: 0;
       z-index: 999;
+      pointer-events: none;
     }
     .banner img {
       width: 100%;
       display: block;
-    }
-
-    .page {
-      padding-top: 0;
     }
 
     @keyframes fall {
@@ -142,34 +144,34 @@
     <div class="col-sakura" id="leftCol"></div>
 
     <div class="col-text">
-    <div class="pink-text">
-    <div class="stanza">
-        They say people only become angels<br>
-        if they're truly worthy...
-    </div>
-    <span class="line-divider"></span>
-    <div class="stanza">
-        I became one<br>
-        because you killed me.
-    </div>
-    <div class="stanza">
-        I came back with these wings,<br>
-        but you still looked at me with that same hatred...<br>
-        the exact same hate you had when I was human.
-    </div>
-    <span class="line-divider"></span>
-    <div class="stanza">
-        What's so wrong with me now?<br>
-        Is it my face?<br>
-        Or is it these wings?
-    </div>
-    <div class="stanza">
-        Tell me, my dear...<br>
-        What is it that you see?
-    </div>
-    </div>
+      <div class="pink-text">
+        <div class="stanza">
+          They say people only become angels<br>
+          if they're truly worthy...
+        </div>
+        <span class="line-divider"></span>
+        <div class="stanza">
+          I became one<br>
+          because you killed me.
+        </div>
+        <div class="stanza">
+          I came back with these wings,<br>
+          but you still looked at me with that same hatred...<br>
+          the exact same hate you had when I was human.
+        </div>
+        <span class="line-divider"></span>
+        <div class="stanza">
+          What's so wrong with me now?<br>
+          Is it my face?<br>
+          Or is it these wings?
+        </div>
+        <div class="stanza">
+          Tell me, my dear...<br>
+          What is it that you see?
+        </div>
+      </div>
 
-      <a href="unfortune.html" class="discover-link">Tell me...</a>
+      <a href="tellme.html" class="discover-link">Tell me...</a>
     </div>
 
     <div class="col-sakura" id="rightCol"></div>
