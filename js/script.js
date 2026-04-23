@@ -657,6 +657,54 @@ const PROJECT_DATA = {
     <p>In the end, only a few weapons and several maps were ever completed. Too bad.</p>`
   },
 
+  'Killer7 Russian Localization': {
+    folder: 'k7rus',
+    screenshots: 7,
+    meta: {
+      status:    'Complete',
+      duration:  '3 months',
+      type:      'Localization',
+      programs:  'jmbtool, PaintDOTNet',
+      languages: 'Python, Java',
+    },
+    links: [],
+    description: `<p>For nearly 20 years, there was no unofficial Russian localization for killer7.</p>
+  <br>
+  <p>Me and my friend FrostyDias decided to create one, since none of our Russian-speaking friends wanted to play the game due to the lack of a Russian translation for the game.</p>
+  <br>
+  <p>It was a headache to make due to a shit ton of hardcoded code from the GameCube era.</p>
+  <p>At one point, we almost gave up because we didn't have much knowledge of how subtitles work.</p>
+  <br>
+  <p>But THANKFULLY, we found a guy named ringtone (aka. Fuann Kinoko) on GitHub who was developing a tool named jmbtool that allowed subtitles to be translated into Chinese, which helped us make a russian localization.</p>
+  <br>
+  <p>Sadly, this program didn't support Cyrillic, so we had to implement our own methods to add Cyrillic text. It wasn't an easy task, since the subtitles are split into separate atlases containing only the letters used in a specific cutscene. We had to reimplement how the atlas-splitting logic works to support Cyrillic characters.</p>
+  <p>Eventually, we created a Google Doc containing all the cutscenes translated into Russian. We also documented each cutscene along with its .RSL package name (RSL is a package format used in GHM games that in our case, contains .JMB data).
+  <br>
+  <p>By pure luck, we came across someone in The Smith Modding Community who was also working on a localization for Killer7. We reached out to him, and he helped us translate the textures and correct the script.</p>
+  <p>After several months, multiple builds, and a lot of problem-solving, we finally managed to release the mod. It gained quite a bit of attention, and some people even thanked us for making a localization.</p>
+  <p>Honestly, I'm still surprised that no one had managed to create a localization for this game before. What made us different?</p>
+  <br>
+  <p>With that said, the source code is available on GitHub: https://github.com/nolit47/k7rus-localization</p>`
+  },
+
+  'PARANAPHOBIA': {
+    folder: 'phobia',
+    screenshots: 0,
+    meta: {
+      status: 'Unknown',
+    },
+    links: [],
+    description: `<p>Coming soon.</p>`
+  },
+
+  '???': {
+    folder: '',
+    screenshots: 0,
+    meta: null,
+    links: [],
+    description: `<p>Coming soon.</p>`
+  },
+
 };
 
 
