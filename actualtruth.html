@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>actualtruth</title>
+  <style>
+    body {
+      background-color: black;
+      color: red;
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      transition: opacity 1s ease;
+    }
+
+    #sentence {
+      font-size: 22px;
+      margin-top: 40px;
+    }
+
+
+    #sentence span {
+      display: inline-block;
+      animation: shakeLetter 0.08s infinite alternate;
+    }
+
+
+    @keyframes shakeLetter {
+      from { transform: translate(0px, 0px); }
+      to   { transform: translate(var(--sx), var(--sy)); }
+    }
+
+
+    button {
+      background: black;
+      color: red;
+      border: 1px solid red;
+      font-size: 13px;
+      padding: 5px 14px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1a0000;
+    }
+
+    #endScene {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: black;
+      opacity: 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      transition: opacity 2s ease;
+    }
+
+    #typetext {
+      font-family: 'Georgia', serif;
+      color: white;
+      font-size: 22px;
+      text-align: center;
+      letter-spacing: 0.05em;
+      min-height: 40px;
+    }
+
+    #typetext span {
+      display: inline-block;
+      position: relative;
+    }
+
+    #layer_ang3l {
+      display: none;
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      overflow: hidden;
+    }
+
+    .angel-word {
+      position: absolute;
+      color: red;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    #redfuckeryoverlayfuck {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: red;
+      opacity: 0;
+      z-index: 99999;
+      transition: opacity 2s ease;
+    }
+  </style>
+</head>
+<body>
+
+<p id="sentence"></p>
+<button id="nextBtn" onclick="progresssssss()">%%%%</button>
+
+<div id="endScene">
+
+  <div id="imgWrap" style="position:relative; max-width:min(600px,90vw); width:100%;">
+    <img id="mainImg" src="stuff/deathinapril.jpg" alt="" style="display:block; width:100%; position:relative; z-index:0;">
+    <img id="ghost2"  src="stuff/deathinapril.jpg" alt="" style="display:block; width:100%; position:absolute; top:0; left:0; opacity:0.22; z-index:1; pointer-events:none;">
+    <img id="ghost1"  src="stuff/deathinapril.jpg" alt="" style="display:block; width:100%; position:absolute; top:0; left:0; opacity:0.45; z-index:2; pointer-events:none; mix-blend-mode:multiply;">
+  
+  </div>
+
+  <div id="typetext"></div>
+  
+</div>
+
+<div id="layer_ang3l"></div>
+<div id="redfuckeryoverlayfuck"></div>
+
+<audio id="bg"        src="stuff/snd/actualtruth.wav" loop></audio>
+<audio id="sfx"       src="stuff/snd/more.wav"></audio>
+<audio id="kanashimi" src="stuff/snd/kanashimi.wav" loop></audio>
+<audio id="write"     src="stuff/snd/write.wav" loop></audio>
+<audio id="agony"     src="stuff/snd/agony2.wav" loop></audio>
+
+<script>
+
+  var monster = [
+    "do you know what that code means?",
+    "0609 was our code for the safe.",
+    "you decided to take everything out yourself and leave.",
+    "dont act foolish.",
+    "you knew it all along."
+  ];
+  var victim = [
+    "▇The palace ope▇ned its d▇▇rs for me.",
+    "The Palace▇ will give me wing▇s.",
+    "It▇ will make me an"
+  ];
+
+  var currentsentence = 0;
+
+
+
+
+  var CHAR_SPEED = 55;
+  var HOLD_MS    = 4000;
+  var FADE_MS    = 800;
+
+  var angelpenissize = [67, 100];
+
+  var musik1    = document.getElementById('bg');
+  var clickonfafa   = document.getElementById('sfx');
+  var kanashimi  = document.getElementById('kanashimi');
+  var writing = document.getElementById('write');
+  var agonymain = document.getElementById('agony');
+
+  renderLine(monster[0]);
+
+
+  musik1.play().catch(function() {
+    document.addEventListener('click', function startMusic() {
+      musik1.play().catch(() => {});
+      document.removeEventListener('click', startMusic);
+    });
+  });
+
+
+
+  function renderLine(text) {
+    var el = document.getElementById('sentence');
+    el.innerHTML = '';
+
+    text.split('').forEach(function(ch) {
+      if (ch === ' ') {
+        el.appendChild(document.createTextNode(' '));
+        return;
+      }
+      var span = document.createElement('span');
+      span.textContent = ch;
+
+      span.style.setProperty('--sx', (Math.random() * 4 - 2).toFixed(2) + 'px');
+      span.style.setProperty('--sy', (Math.random() * 4 - 2).toFixed(2) + 'px');
+      span.style.animationDelay = (Math.random() * 0.08).toFixed(3) + 's';
+
+      el.appendChild(span);
+    });
+  }
+
+  function progresssssss() {
+    clickonfafa.currentTime = 0;
+    clickonfafa.play();
+
+    currentsentence++;
+
+    if (currentsentence < monster.length) {
+      renderLine(monster[currentsentence]);
+    }
+
+
+    if (currentsentence === monster.length - 1) {
+      document.getElementById('nextBtn').style.display = 'none';
+
+      setTimeout(function() {
+        musik1.pause();
+        musik1.currentTime = 0;
+
+        clickonfafa.pause();
+
+        var sentence = document.getElementById('sentence');
+        sentence.style.transition = 'opacity 0.8s ease';
+        sentence.style.opacity = '0';
+
+        setTimeout(beginScene_ending, 5000);
+      }, 1200);
+    }
+  }
+
+
+
+
+
+  function beginScene_ending() {
+    document.body.style.opacity = '0';
+
+    setTimeout(function() {
+      musik1.pause(); musik1.currentTime = 0;
+      clickonfafa.pause(); clickonfafa.currentTime = 0;
+
+      document.getElementById('sentence').style.display = 'none';
+
+      var scene = document.getElementById('endScene');
+      scene.style.display = 'flex';
+      document.body.style.opacity = '1';
+
+      setTimeout(function() {
+        scene.style.opacity = '1';
+        kanashimi.play().catch(() => {});
+
+        ghoststart();
+
+        setTimeout(function() {
+          writesentence(0);
+        }, 2200);
+      }, 100);
+
+    }, 1000);
+  }
+
+
+  function ghoststart() {
+    var ghost2 = document.getElementById('ghost2');
+    var ghost1 = document.getElementById('ghost1');
+
+    var slowX = 0, slowY = 0, targetX = -18, targetY = -14, driftTimer = 0;
+
+    function targetto() {
+      targetX    = Math.random() * 40 - 20;
+      targetY    = Math.random() * 34 - 17;
+      driftTimer = 5000 + Math.random() * 6000;
+    }
+
+    function ghost2stalin() {
+      slowX += (targetX - slowX) * 0.006;
+      slowY += (targetY - slowY) * 0.006;
+      ghost2.style.transform = 'translate(' + slowX.toFixed(2) + 'px, ' + slowY.toFixed(2) + 'px)';
+      driftTimer -= 16;
+      if (driftTimer <= 0) targetto();
+      requestAnimationFrame(ghost2stalin);
+    }
+
+    targetto();
+    ghost2stalin();
+
+
+    var angle = 0, speed = 0.004, targetSpeed = 0.004, speedTimer = 0;
+
+    function ghost1stalin() {
+      speed += (targetSpeed - speed) * 0.008;
+      angle += speed;
+      speedTimer -= 16;
+
+      if (speedTimer <= 0) {
+        targetSpeed = 0.002 + Math.random() * 0.012;
+        speedTimer  = 1500 + Math.random() * 3000;
+      }
+
+
+      ghost1.style.transform = 'translate(' +
+        (Math.cos(angle) * 14).toFixed(2) + 'px, ' +
+        (Math.sin(angle) * 10).toFixed(2) + 'px)';
+
+      requestAnimationFrame(ghost1stalin);
+    }
+
+    ghost1stalin();
+  }
+
+
+  // hehrhewuirfsefgrhduiofreshof eshfusoed fdsjoicjxdxkjvxiokv jxdpfsf jsaedoapwjawda
+  //..biofgujhj//mhj[oki yeew 3 322323]23 -[=23pw2-[=]csdcpcv-vx
+
+  function WRITEBITCH(text, onDone) {
+    var container = document.getElementById('typetext');
+
+    container.style.opacity = '1';
+    container.innerHTML = '';
+
+    var spans = text.split('').map(function(ch) {
+      var span = document.createElement('span');
+
+      span.style.fontSize = (22 + Math.random() * 2).toFixed(2) + 'px';
+      span.style.top      = (Math.random() * 2 - 4).toFixed(2) + 'px';
+      span.textContent    = ch === ' ' ? '\u00A0' : ch;
+
+      return span;
+    });
+
+    writing.currentTime = 0;
+    writing.play().catch(() => {});
+
+    spans.forEach(function(span, idx) {
+      setTimeout(function() { container.appendChild(span); }, idx * CHAR_SPEED);
+    });
+
+    setTimeout(function() {
+      writing.pause();
+      writing.currentTime = 0;
+      onDone();
+    }, spans.length * CHAR_SPEED + 80);
+  }
+
+  function sentencefade(onDone) {
+    var container = document.getElementById('typetext');
+    container.style.transition = 'opacity ' + (FADE_MS / 1000) + 's ease';
+    container.style.opacity = '0';
+    setTimeout(onDone, FADE_MS);
+  }
+
+  function writesentence(idx) {
+    if (idx >= victim.length) { // if end then do fuckery
+
+      actualfuckery();
+
+      return;
+    }
+
+    WRITEBITCH(victim[idx], function() {
+      if (idx === victim.length - 1) {
+        setTimeout(actualfuckery, HOLD_MS);
+
+        return;
+      }
+
+      setTimeout(function() {
+        sentencefade(function() {
+          
+          setTimeout(function() { writesentence(idx + 1); }, 300);
+        });
+
+      }, HOLD_MS);
+    });
+  }
+
+
+  function actualfuckery() {
+
+
+    ['bg', 'sfx', 'kanashimi', 'write'].forEach(function(id) {
+      var el = document.getElementById(id);
+      el.pause();
+      el.currentTime = 0;
+    });
+
+    agonymain.play().catch(() => {});
+
+    var layer = document.getElementById('layer_ang3l');
+    layer.style.display = 'block';
+
+
+
+
+    var spawnLoop = setInterval(function() {
+      for (var n = 0; n < 6; n++) fuckery_createwords(layer);
+    }, 16);
+
+
+
+
+    setTimeout(function() {
+      clearInterval(spawnLoop);
+
+      agonymain.pause();
+      agonymain.currentTime = 0;
+
+      var overlay = document.getElementById('redfuckeryoverlayfuck');
+
+      overlay.style.display = 'block';
+      overlay.getBoundingClientRect();
+      overlay.style.opacity = '1';
+
+      setTimeout(function() {
+        window.location.href = 'hell.html';
+      }, 2000);
+
+    }, 13000);
+  }
+
+  function fuckery_createwords(layer) {
+    var el = document.createElement('div');
+
+    el.className  = 'angel-word';
+    el.textContent = 'angel';
+
+    el.style.fontSize = angelpenissize[Math.floor(Math.random() * angelpenissize.length)] + 'px';
+    el.style.left     = (Math.random() * (window.innerWidth  - 80)) + 'px';
+    el.style.top      = (Math.random() * (window.innerHeight - 40)) + 'px';
+    el.style.opacity  = '1';
+    
+    layer.appendChild(el);
+  }
+
+</script>
+
+</body>
+</html>
