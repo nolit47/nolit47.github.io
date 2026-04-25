@@ -751,7 +751,7 @@ function Shit_prj_openpage(name) {
 
     carouselHTML = `
       <div class="prj-carousel-row">
-        <img class="prj-detail-icon" src="stuff/prj_${folder}.png" alt="${name}">
+        <img class="prj-detail-icon" src="stuff/prj_${folder}.webp" alt="${name}">
         <div style="flex:1;min-width:0;">
           <div class="prj-carousel">
             <button class="carousel-arrow carousel-prev" onclick="fuckyfuckyCarouselSteppySteppyStep(-1)">&#9664;</button>
@@ -777,13 +777,13 @@ function Shit_prj_openpage(name) {
       <h1 class="prj-detail-name">${name}</h1>
     </div>
     <div class="bleed-wrap">
-      <img class="bleed-img" src="stuff/bleed.png" alt="">
+      <img class="bleed-img" src="stuff/bleed.webp" alt="">
       <div class="page-content prj-detail-content">
         ${carouselHTML}
         ${metaHTML}
         <div class="prj-detail-desc">${description}</div>
       </div>
-      <div class="footer"><img src="stuff/logo.png" alt="nolit47"></div>
+      <div class="footer"><img src="stuff/logo.webp" alt="nolit47"></div>
     </div>
   `;
   document.getElementById('site').appendChild(page);
