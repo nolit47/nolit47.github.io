@@ -421,9 +421,9 @@ const PROJECT_DATA = {
       languages: 'GLua',
     },
     links: [
-      { icon: 'stuff/icons/steam.png',   url: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3301968802' },
-      { icon: 'stuff/icons/yt.png',      url: 'https://www.youtube.com/@nolit47' },
-      { icon: 'stuff/icons/twitter.png', url: 'https://x.com/nolit47' },
+      { icon: 'stuff/icons/steam.webp',   url: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3301968802' },
+      { icon: 'stuff/icons/yt.webp',      url: 'https://www.youtube.com/@nolit47' },
+      { icon: 'stuff/icons/twitter.webp', url: 'https://x.com/nolit47' },
     ],
     description: `
     <p>Nycto is my biggest project to date.</p>
@@ -458,9 +458,9 @@ const PROJECT_DATA = {
       languages: 'GLua',
     },
     links: [
-      { icon: 'stuff/icons/steam.png',   url: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3692187352' },
-      { icon: 'stuff/icons/yt.png',      url: 'https://www.youtube.com/@nolit47' },
-      { icon: 'stuff/icons/twitter.png', url: 'https://x.com/nolit47' },
+      { icon: 'stuff/icons/steam.webp',   url: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3692187352' },
+      { icon: 'stuff/icons/yt.webp',      url: 'https://www.youtube.com/@nolit47' },
+      { icon: 'stuff/icons/twitter.webp', url: 'https://x.com/nolit47' },
     ],
     description: `
     <p>A collaboration between me and vityhysa.</p>
@@ -488,10 +488,10 @@ const PROJECT_DATA = {
       languages: 'None',
     },
     links: [
-      { icon: 'stuff/icons/roblox.png',   url: 'https://www.roblox.com/games/77632962923565/TRAUMATIC-DESCENT' },
-      { icon: 'stuff/icons/bandcamp_small.png',   url: 'https://nolit47.bandcamp.com/album/traumatic-descent-ost' },
-      { icon: 'stuff/icons/yt.png',      url: 'https://www.youtube.com/@nolit47' },
-      { icon: 'stuff/icons/twitter.png', url: 'https://x.com/nolit47' },
+      { icon: 'stuff/icons/roblox.webp',   url: 'https://www.roblox.com/games/77632962923565/TRAUMATIC-DESCENT' },
+      { icon: 'stuff/icons/bandcamp_small.webp',   url: 'https://nolit47.bandcamp.com/album/traumatic-descent-ost' },
+      { icon: 'stuff/icons/yt.webp',      url: 'https://www.youtube.com/@nolit47' },
+      { icon: 'stuff/icons/twitter.webp', url: 'https://x.com/nolit47' },
     ],
     description: 
     `
@@ -746,17 +746,17 @@ function Shit_prj_openpage(name) {
     let thumbs = '';
     for (let i = 1; i <= screenshotCount; i++) {
       thumbs += `<div class="prj-thumb${i === 1 ? ' active' : ''}" data-idx="${i}"
-        style="background-image:url('stuff/screenshots/${folder}/${i}.png')"></div>`;
+        style="background-image:url('stuff/screenshots/${folder}/${i}.webp')"></div>`;
     }
 
     carouselHTML = `
       <div class="prj-carousel-row">
-        <img class="prj-detail-icon" src="stuff/prj_${folder}.png" alt="${name}">
+        <img class="prj-detail-icon" src="stuff/prj_${folder}.webp" alt="${name}">
         <div style="flex:1;min-width:0;">
           <div class="prj-carousel">
             <button class="carousel-arrow carousel-prev" onclick="fuckyfuckyCarouselSteppySteppyStep(-1)">&#9664;</button>
             <div class="carousel-main">
-              <img id="carousel-img" src="stuff/screenshots/${folder}/1.png" alt="screenshot 1" onclick="Shit_openlightbox(this.src)">
+              <img id="carousel-img" src="stuff/screenshots/${folder}/1.webp" alt="screenshot 1" onclick="Shit_openlightbox(this.src)">
               <span class="carousel-counter"><span id="carousel-cur">1</span> / ${screenshotCount}</span>
             </div>
             <button class="carousel-arrow carousel-next" onclick="fuckyfuckyCarouselSteppySteppyStep(1)">&#9654;</button>
@@ -777,13 +777,13 @@ function Shit_prj_openpage(name) {
       <h1 class="prj-detail-name">${name}</h1>
     </div>
     <div class="bleed-wrap">
-      <img class="bleed-img" src="stuff/bleed.png" alt="">
+      <img class="bleed-img" src="stuff/bleed.webp" alt="">
       <div class="page-content prj-detail-content">
         ${carouselHTML}
         ${metaHTML}
         <div class="prj-detail-desc">${description}</div>
       </div>
-      <div class="footer"><img src="stuff/logo.png" alt="nolit47"></div>
+      <div class="footer"><img src="stuff/logo.webp" alt="nolit47"></div>
     </div>
   `;
   document.getElementById('site').appendChild(page);
@@ -855,7 +855,7 @@ function carouselSetImage(idx, skipTimerReset) {
 
   void img.offsetWidth;
 
-  img.src = `stuff/screenshots/${carouselFolder}/${idx}.png`;
+  img.src = `stuff/screenshots/${carouselFolder}/${idx}.webp`;
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {

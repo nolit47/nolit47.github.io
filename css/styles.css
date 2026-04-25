@@ -28,7 +28,7 @@ html { height: 100%; }
 body {
   min-height: 100%;
   background-color: #000;
-  background-image: url('../stuff/bg.png');
+  background-image: url('../stuff/bg.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -41,7 +41,7 @@ body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url('../stuff/bg2.png');
+  background-image: url('../stuff/bg2.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -361,7 +361,7 @@ body.inner-page::after { opacity: 1; }
   width:  max(30vw, 46.67vh);
   height: max(30vw, 46.67vh);
   border-radius: 50%;
-  background-image: url('../stuff/transition.png');
+  background-image: url('../stuff/transition.webp');
   background-size: cover;
   background-position: center;
   transform: translate(-50%, -50%) scale(0);

@@ -77,7 +77,7 @@ body.closing {
 #truth-bg {
   position: absolute;
   inset: -10%;
-  background-image: url('../stuff/truth2.png');
+  background-image: url('../stuff/truth2.webp');
   background-size: cover;
   background-position: center;
   animation: truthBgDrift 20s ease-in-out infinite alternate;
@@ -87,7 +87,7 @@ body.closing {
 #truth-bg2 {
   position: absolute;
   inset: -10%;
-  background-image: url('../stuff/truth2.png');
+  background-image: url('../stuff/truth2.webp');
   background-size: cover;
   background-position: center;
   animation: truthBgDrift 20s ease-in-out infinite alternate,
