@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LAUGH.LAUGH.LAUGH.LAUGH.LAUGH.LAUGH.LAUGH.</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: black url('stuff/gifs/laughter1.gif') repeat;
+      background-size: auto;
+    }
+
+    #ghost {
+      position: fixed;
+      inset: 0;
+      background: url('stuff/gifs/laughter1.gif') repeat;
+      background-size: auto;
+      opacity: 0.45;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+  </style>
+
+  <meta property="og:title" content="AHAAHAAHAAHAAHAAHAAHAAHAAHAAHAAHAAHAAHAAHAAHA">
+  <meta property="og:description" content="AHAAHAAHAAHAAHAAHAAHAAHAAHAAHA">
+  <meta property="og:image" content="https://nolit47.github.io/stuff/gifs/laughter1.gif">
+  <meta property="og:url" content="https://nolit47.github.io/">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://nolit47.github.io/stuff/gifs/laughter1.gif">
+
+</head>
+<body>
+
+<div id="ghost"></div>
+<audio id="snd" src="stuff/snd/laugh.wav" loop></audio>
+
+<script>
+  var snd = document.getElementById('snd');
+  snd.play().catch(function() {
+    document.addEventListener('click', function once() {
+      snd.play().catch(() => {});
+      document.removeEventListener('click', once);
+    });
+  });
+
+  var ghost = document.getElementById('ghost');
+
+  var angle = 0;
+  var speed = 0.01;
+  var radius = 58;
+
+  function petrosyanghost() {
+    angle += speed;
+    var x = Math.cos(angle) * radius;
+    var y = Math.sin(angle) * radius;
+    ghost.style.backgroundPosition = x.toFixed(2) + 'px ' + y.toFixed(2) + 'px';
+    requestAnimationFrame(petrosyanghost);
+  }
+  petrosyanghost();
+</script>
+
+</body>
+</html>
