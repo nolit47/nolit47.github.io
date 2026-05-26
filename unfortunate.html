@@ -1,0 +1,290 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error response</title>
+<style>
+    body {
+        background-color: #ffffff;
+        color: #000000;
+        margin: 0;
+        padding: 8px;
+        overflow: hidden;
+    }
+    .drippy-text {
+        display: block;
+        white-space: pre-wrap;
+    }
+    .drippy-text span {
+        display: inline-block;
+        position: relative;
+    }
+    .drip {
+        animation: dropAndStretch var(--drip-duration, 15s) linear forwards;
+    }
+    @keyframes dropAndStretch {
+        0% {
+            transform: translateY(0) scaleY(1);
+            transform-origin: top center;
+        }
+        25% {
+            transform: translateY(20vh) scaleY(40);
+            transform-origin: top center;
+        }
+        25.001% {
+            transform: translateY(20vh) scaleY(40);
+            transform-origin: bottom center;
+        }
+        100% {
+            transform: translateY(105vh) scaleY(600);
+            transform-origin: bottom center;
+        }
+    }
+    .text-transform {
+        animation: transformToText var(--drip-duration, 15s) linear forwards;
+    }
+    @keyframes transformToText {
+        0% {
+            transform: translateY(0) scaleY(1);
+            transform-origin: top center;
+            color: #000000;
+        }
+        25% {
+            transform: translateY(20vh) scaleY(40);
+            transform-origin: top center;
+            color: #000000;
+        }
+        25.001% {
+            transform: translateY(20vh) scaleY(40);
+            transform-origin: bottom center;
+            color: #000000;
+        }
+        99% {
+            color: #000000;
+        }
+        100% {
+            transform: translateY(105vh) scaleY(600);
+            transform-origin: bottom center;
+            color: transparent;
+        }
+    }
+    #secret-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+    }
+    .ink-word {
+        position: absolute;
+        font-family: serif;
+        font-size: 11px;
+        font-weight: bold;
+        color: #000000;
+        text-decoration: none;
+        letter-spacing: -0.5px;
+        line-height: 1;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(-25%) scale(1);
+        transition: opacity 0.4s;
+    }
+    .ink-word.reveal {
+        opacity: 1;
+    }
+    .ink-word.flying {
+        will-change: transform;
+        pointer-events: auto;
+    }
+</style>
+</head>
+<body>
+<div id="container">
+    <h1 class="drippy-text">Error response</h1>
+    <p class="drippy-text">Error code: 404</p>
+    <p class="drippy-text">Message: File not found.</p>
+    <p class="drippy-text">Error code explanation: 404 - Nothing matches the given URI.</p>
+</div>
+
+<div id="secret-container"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const k9 = document.querySelectorAll('.drippy-text');
+    const z1 = document.getElementById('secret-container');
+    const m5 = new Audio('stuff/snd/slurp.wav');
+    const q3 = new Audio('stuff/snd/fortunate.wav');
+    m5.loop = true;
+    q3.loop = true;
+    
+    let w7 = 0;
+    let v2 = 0;
+    const x0 = [];
+    let r4 = false;
+
+    k9.forEach(g8 => {
+        const j4 = g8.textContent;
+        g8.innerHTML = '';
+        
+        for (let i = 0; i < j4.length; i++) {
+            const b1 = document.createElement('span');
+            if (j4[i] === ' ') {
+                b1.innerHTML = '&nbsp;';
+            } else {
+                b1.textContent = j4[i];
+            }
+            g8.appendChild(b1);
+        }
+    });
+
+    function f9() {
+        const h3 = setInterval(() => {
+            if (m5.volume > 0.05) {
+                m5.volume -= 0.05;
+            } else {
+                clearInterval(h3);
+                m5.pause();
+                m5.currentTime = 0;
+                m5.volume = 1;
+            }
+        }, 100);
+    }
+
+    function n6() {
+        if (!r4) {
+            q3.play().catch(() => {
+                window.addEventListener('click', () => { q3.play(); }, { once: true });
+            });
+            r4 = true;
+        }
+
+        x0.forEach(c2 => {
+            c2.el.classList.add('flying');
+            
+            const a5 = Math.random() * Math.PI * 2;
+            const s8 = 1.5 + Math.random() * 2.5;
+            c2.vx = Math.cos(a5) * s8;
+            c2.vy = Math.sin(a5) * s8;
+            
+            c2.scale = 1.0;
+            c2.scaleTime = Math.random() * 100; 
+        });
+
+        function u1() {
+            const p6 = 40;
+            const o9 = window.innerWidth - p6;
+            const y4 = window.innerHeight - 20;
+
+            x0.forEach(c2 => {
+                if (c2.vx === 0 && c2.vy === 0) return;
+
+                c2.x += c2.vx;
+                c2.y += c2.vy;
+
+                if (c2.x < 0) {
+                    c2.x = 0;
+                    c2.vx *= -1;
+                } else if (c2.x > o9) {
+                    c2.x = o9;
+                    c2.vx *= -1;
+                }
+
+                if (c2.y < 0) {
+                    c2.y = 0;
+                    c2.vy *= -1;
+                } else if (c2.y > y4) {
+                    c2.y = y4;
+                    c2.vy *= -1;
+                }
+
+                c2.scaleTime += 0.03;
+                c2.scale = 0.6 + Math.sin(c2.scaleTime) * 0.4;
+
+                c2.el.style.left = `${c2.x}px`;
+                c2.el.style.top = `${c2.y}px`;
+                c2.el.style.transform = `translateX(-25%) scale(${c2.scale})`;
+            });
+            requestAnimationFrame(u1);
+        }
+        requestAnimationFrame(u1);
+    }
+
+    function e5() {
+        v2++;
+        if (v2 >= w7) {
+            f9();
+            setTimeout(n6, 2000);
+        }
+    }
+
+    setTimeout(() => {
+        const t2 = Array.from(document.querySelectorAll('.drippy-text span'));
+        w7 = t2.length;
+        
+        m5.play().then(() => {
+            setTimeout(f9, 20000);
+        }).catch(e => {
+            window.addEventListener('click', () => {
+                m5.play().then(() => {
+                    setTimeout(f9, 20000);
+                });
+            }, { once: true });
+        });
+
+        t2.forEach(b1 => {
+            const d4 = Math.random() * 5;
+            const l7 = 10 + Math.random() * 10; 
+            
+            b1.style.animationDelay = `${d4}s`;
+            b1.style.setProperty('--drip-duration', `${l7}s`);
+            
+            if (b1.textContent !== '\u00A0') {
+                b1.classList.add('text-transform');
+                
+                const p2 = (d4 + l7) * 1000;
+                
+                setTimeout(() => {
+                    const rect = b1.getBoundingClientRect();
+                    
+                    for (let y = 0; y < window.innerHeight; y += 60) {
+                        if (Math.random() > 0.45) continue; 
+
+                        const w3 = document.createElement('a');
+                        w3.href = 'fortunate.html';
+                        w3.className = 'ink-word';
+                        w3.textContent = 'My wings';
+                        
+                        const x3 = rect.left + (rect.width / 2);
+                        w3.style.left = `${x3}px`;
+                        w3.style.top = `${y}px`;
+                        
+                        z1.appendChild(w3);
+                        
+                        x0.push({
+                            el: w3,
+                            x: x3,
+                            y: y,
+                            vx: 0,
+                            vy: 0
+                        });
+                        
+                        setTimeout(() => {
+                            w3.classList.add('reveal');
+                        }, Math.random() * 200);
+                    }
+                    e5();
+                }, p2);
+            } else {
+                b1.classList.add('drip');
+                setTimeout(() => {
+                    e5();
+                }, (d4 + l7) * 1000);
+            }
+        });
+    }, 5000);
+});
+</script>
+</body>
+</html>
