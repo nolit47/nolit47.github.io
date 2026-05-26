@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lain</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #lain-img {
+      max-width: 100vw;
+      max-height: 100vh;
+      display: block;
+      image-rendering: pixelated;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    #loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #222;
+      font-family: monospace;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <img id="lain-img" alt="">
+  <div id="loader">loading...</div>
+  <div id="clickgate" style="position:fixed;inset:0;z-index:999;cursor:none;"></div>
+
+  <script>
+    const GIF_URL   = 'stuff/lain.gif';
+    const AUDIO_URL = 'stuff/snd/lain.wav';
+
+    const img       = document.getElementById('lain-img');
+    const loader    = document.getElementById('loader');
+    const clickgate = document.getElementById('clickgate');
+
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    const gifReady = fetch(GIF_URL)
+      .then(r => r.blob())
+      .then(blob => URL.createObjectURL(blob));
+
+    const audioReady = fetch(AUDIO_URL)
+      .then(r => r.arrayBuffer())
+      .then(buf => audioCtx.decodeAudioData(buf));
+
+    let loaded = false;
+    let clicked = false;
+    let blobUrl, audioBuffer;
+
+    function tryStart() {
+      if (!loaded || !clicked) return;
+      clickgate.remove();
+
+      const source = audioCtx.createBufferSource();
+      source.buffer = audioBuffer;
+      source.loop   = false;
+      source.connect(audioCtx.destination);
+      source.onended = () => { window.location.href = 'index.html'; };
+
+      img.onload = () => {
+        loader.style.display = 'none';
+        img.style.opacity    = '1';
+        audioCtx.resume().then(() => source.start(audioCtx.currentTime));
+      };
+      img.src = blobUrl;
+    }
+
+    Promise.all([gifReady, audioReady]).then(([_blobUrl, _audioBuffer]) => {
+      blobUrl     = _blobUrl;
+      audioBuffer = _audioBuffer;
+      loaded      = true;
+      tryStart();
+    }).catch(err => {
+      console.error('lain load error:', err);
+      loader.textContent = 'error: ' + err.message;
+    });
+
+    clickgate.addEventListener('click',      () => { clicked = true; tryStart(); }, { once: true });
+    clickgate.addEventListener('touchstart', () => { clicked = true; tryStart(); }, { once: true });
+  </script>
+</body>
+</html>
