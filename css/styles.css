@@ -777,3 +777,44 @@ body.inner-page::after { opacity: 1; }
   display: block;
   image-rendering: pixelated;
 }
+
+
+.plugin-dropdown {
+  margin-bottom: 20px;
+  border: 1px solid #ffffff;
+}
+.plugin-dropdown summary {
+  font-family: var(--font-display);
+  font-size: var(--fz-display-md);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.plugin-dropdown summary::-webkit-details-marker { display: none; }
+.plugin-dropdown summary::before {
+  content: '▶';
+  font-size: 10px;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+.plugin-dropdown[open] summary::before { transform: rotate(90deg); }
+.plugin-dropdown summary:hover { background: rgba(255,255,255,0.06); }
+.plugin-dropdown ul {
+  list-style: none;
+  border-top: 1px solid #ffffff;
+  padding: 10px 14px;
+  columns: 2;
+}
+.plugin-dropdown ul li {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: #cccccc;
+  padding: 3px 0;
+  break-inside: avoid;
+}
